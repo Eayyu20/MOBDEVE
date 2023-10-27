@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:onClick="toCharacterSelect"
-    android:orientation="vertical"
-    android:screenOrientation="portrait"
+    android:orientation="horizontal"
+    android:screenOrientation="landscape"
     tools:context=".TitleActivity">
 
     <ImageView

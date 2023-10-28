@@ -33,12 +33,12 @@ class TitleActivity : AppCompatActivity() {
         margin.setMargins(0,scaledTopMargin,0,scaledBotMargin)
         title.layoutParams = margin
 
-        Toast.makeText(this, height.toString() + " x " + width.toString(), Toast.LENGTH_LONG).show()
-
+//        Toast.makeText(this, height.toString() + " x " + width.toString(), Toast.LENGTH_LONG).show()
     }
 
     fun toCharacterSelect(v: View){
         val i = Intent(this, CharacterSelectActivity::class.java)
         startActivity(i)
+        finish()
     }
 }

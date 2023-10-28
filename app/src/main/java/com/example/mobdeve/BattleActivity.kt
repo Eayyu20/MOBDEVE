@@ -6,7 +6,7 @@ import android.os.Bundle
 class BattleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.character_select)
+        setContentView(R.layout.battle_screen)
 
 //        var bundle : Bundle? = intent.extras // not sure if this is the correct syntax. pls check
 //

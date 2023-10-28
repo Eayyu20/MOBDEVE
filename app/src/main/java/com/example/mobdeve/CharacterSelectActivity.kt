@@ -19,7 +19,6 @@ class CharacterSelectActivity : AppCompatActivity() {
         setContentView(R.layout.character_select)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
     }
 
     fun onCharSelect(charId: Int) {
@@ -53,8 +52,8 @@ class CharacterSelectActivity : AppCompatActivity() {
             val i = Intent(this, BattleActivity::class.java)
             i.putExtra("p1Char", p1CharSelect)
             i.putExtra("p2Char", p2CharSelect)
-            finish()
             startActivity(i)
+            finish()
         }
     }
 }

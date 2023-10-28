@@ -16,6 +16,8 @@ class TitleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.title_screen)
 
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         val height = displayMetrics.heightPixels
@@ -23,9 +25,8 @@ class TitleActivity : AppCompatActivity() {
         var scaledTopMargin = 0
         var scaledBotMargin = 0
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        scaledTopMargin = (height * (1.0 / 5.0)).toInt()
-        scaledBotMargin = (width * (1.0 / 13.0)).toInt()
+        scaledTopMargin = (height * (0.75 / 5.0)).toInt()
+        scaledBotMargin = (width * (1.0 / 20.0)).toInt()
 
         val title = findViewById<TextView>(R.id.tvTitle)
         val margin = title.layoutParams as ViewGroup.MarginLayoutParams

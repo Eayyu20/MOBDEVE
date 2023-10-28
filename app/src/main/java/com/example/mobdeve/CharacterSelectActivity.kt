@@ -54,13 +54,13 @@ class CharacterSelectActivity : AppCompatActivity() {
 
         if (v.id === R.id.btP1Lock) {
             p1LockStatus *= -1
-            if (p1LockStatus == -1){ btP1.text = "LOCK" }
-            else { btP1.text = "LOCKED" }
+            if (p1LockStatus == -1){ btP1.text = "READY?" }
+            else { btP1.text = "READY!" }
         }
         else if (v.id === R.id.btP2Lock) {
             p2LockStatus *= -1
-            if (p2LockStatus == -1){ btP2.text = "LOCK" }
-            else { btP2.text = "LOCKED" }
+            if (p2LockStatus == -1){ btP2.text = "READY?" }
+            else { btP2.text = "READY!" }
         }
 
         if (p1LockStatus == 1 && p2LockStatus == 1 && p1CharSelect > 0 && p2CharSelect > 0) {
@@ -70,5 +70,11 @@ class CharacterSelectActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    fun goBack(v: View){
+        val intent = Intent(this, TitleActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

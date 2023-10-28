@@ -78,12 +78,19 @@
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="315dp"
-                android:layout_height="316dp"
+                android:layout_height="315dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="15dp"
                 android:layout_weight="0"
-                android:src="@tools:sample/avatars"
-                app:srcCompat="@drawable/stage"
-                tools:layout_editor_absoluteX="28dp"
-                tools:layout_editor_absoluteY="15dp" />
+                android:src="@drawable/stage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/stage" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -104,6 +111,14 @@
                 android:scaleY="1"
                 android:src="@drawable/joystick"
                 tools:layout_gravity="bottom" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="end"
+                android:text="End" />
 
             <Space
                 android:layout_width="wrap_content"

@@ -1,9 +1,11 @@
 package com.example.mobdeve
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.View
 import android.widget.Toast
 
 class BattleActivity : AppCompatActivity() {
@@ -29,6 +31,12 @@ class BattleActivity : AppCompatActivity() {
 //        while (true) {
 //
 //        }
+
+        fun end(v: View){
+            val intent = Intent(this, TitleActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
 }

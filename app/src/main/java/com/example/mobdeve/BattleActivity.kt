@@ -8,18 +8,18 @@ class BattleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.character_select)
 
-        var bundle : Bundle ?= intent.extras // not sure if this is the correct syntax. pls check
-
-        val p1CharId : Int = bundle!!.getString("p1Char").toString().toInt()
-        val p2CharId : Int = bundle!!.getString("p2Char").toString().toInt()
-
-        var p1 : Player = Player(p1CharId)
-        var p2 : Player = Player(p2CharId)
+//        var bundle : Bundle? = intent.extras // not sure if this is the correct syntax. pls check
+//
+//        val p1CharId : Int = bundle!!.getString("p1Char").toString().toInt()
+//        val p2CharId : Int = bundle!!.getString("p2Char").toString().toInt()
+//
+//        var p1 : Player = Player(p1CharId)
+//        var p2 : Player = Player(p2CharId)
 
         // main game loop
-        while (true) {
-
-        }
+//        while (true) {
+//
+//        }
     }
 }
 

@@ -5,19 +5,167 @@
     android:id="@+id/clBG"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D1B8A8"
     tools:context=".CharacterSelectActivity">
 
     <LinearLayout
         android:id="@+id/llCharacSelect"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/llP2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btP2Lock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="100sp"
+                android:layout_weight="1"
+                android:backgroundTint="#D6C4C4"
+                android:fontFamily="monospace"
+                android:padding="1sp"
+                android:rotation="180"
+                android:text="LOCK"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:onClick="onLock"
+                app:cornerRadius="0sp"
+                app:strokeColor="@android:color/holo_red_dark"
+                app:strokeWidth="4sp"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:id="@+id/llP2Charac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom">
+
+                <ImageView
+                    android:id="@+id/ivShieldP2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#D39898"
+                    android:contentDescription="P2 Shield"
+                    android:rotation="180"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/standing_3"
+                    app:srcCompat="@drawable/standing_3"
+                    tools:srcCompat="@drawable/standing_3"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:id="@+id/ivSpearP2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#D39898"
+                    android:contentDescription="P2 Spear"
+                    android:rotation="180"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/standing_2"
+                    app:srcCompat="@drawable/standing_2"
+                    tools:ignore="HardcodedText"
+                    tools:srcCompat="@drawable/standing_2" />
+
+                <ImageView
+                    android:id="@+id/ivSwordP2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#D39898"
+                    android:contentDescription="P2 Sword"
+                    android:rotation="180"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/standing_1"
+                    app:srcCompat="@drawable/standing_1"
+                    tools:ignore="HardcodedText"
+                    tools:srcCompat="@drawable/standing_1" />
+
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/llP1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"></LinearLayout>
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llP1Charac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top">
+
+                <ImageView
+                    android:id="@+id/ivSwordP1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#9DC5F6"
+                    android:contentDescription="P1 Sword"
+                    android:src="@drawable/standing_1"
+                    app:srcCompat="@drawable/standing_1"
+                    tools:ignore="HardcodedText"
+                    tools:srcCompat="@drawable/standing_1" />
+
+                <ImageView
+                    android:id="@+id/ivSpearP1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#9DC5F6"
+                    android:contentDescription="P1 Spear"
+                    android:src="@drawable/standing_2"
+                    app:srcCompat="@drawable/standing_2"
+                    tools:ignore="HardcodedText"
+                    tools:srcCompat="@drawable/standing_2" />
+
+                <ImageView
+                    android:id="@+id/ivShieldP1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#9DC5F6"
+                    android:contentDescription="P1 Shield"
+                    android:src="@drawable/standing_3"
+                    app:srcCompat="@drawable/standing_3"
+                    tools:ignore="HardcodedText"
+                    tools:srcCompat="@drawable/standing_3" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btP1Lock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100sp"
+                android:layout_weight="0"
+                android:backgroundTint="#C4CDD6"
+                android:fontFamily="monospace"
+                android:text="LOCK"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:onClick="onLock"
+                app:cornerRadius="0sp"
+                app:strokeColor="@android:color/holo_blue_dark"
+                app:strokeWidth="4sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

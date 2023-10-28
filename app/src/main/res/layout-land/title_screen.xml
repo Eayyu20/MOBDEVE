@@ -13,12 +13,12 @@
         android:id="@+id/ivBackgroundArt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_launcher_background"
+        android:src="@drawable/bgtitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:srcCompat="@drawable/bgtitle" />
 
     <Button
         android:id="@+id/btClick"
@@ -45,8 +45,11 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
             android:fontFamily="monospace"
-            android:text="insert title"
-            android:textSize="48sp" />
+            android:shadowColor="#F60000"
+            android:text="F.Y.T"
+            android:textColor="#FFFFFF"
+            android:textSize="80sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvClick"
@@ -57,6 +60,7 @@
             android:orientation="horizontal"
             android:text="Click anywhere to start!"
             android:textAlignment="center"
+            android:textColor="#FFFFFF"
             android:textSize="18sp" />
     </LinearLayout>
 

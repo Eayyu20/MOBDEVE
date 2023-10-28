@@ -20,7 +20,8 @@ class CharacterSelectActivity : AppCompatActivity() {
         setContentView(R.layout.character_select)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
+        Toast.makeText(this, "Tip: Select your character and then lock when you're ready.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Tip: Battle will commence once both players lock in.", Toast.LENGTH_LONG).show()
     }
 
     fun onCharSelect(v: View) {

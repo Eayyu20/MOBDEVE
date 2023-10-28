@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 
 class CharacterSelectActivity : AppCompatActivity() {
     private var p1CharSelect: Int = -1
@@ -19,16 +20,29 @@ class CharacterSelectActivity : AppCompatActivity() {
         setContentView(R.layout.character_select)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
     }
 
-    fun onCharSelect(charId: Int) {
+    fun onCharSelect(v: View) {
         // if player is player 1
-        if (true) {
-            p1CharSelect = charId
+        if (v.id === R.id.ivShieldP1) {
+            this.p1CharSelect = 3
+        }
+        else if (v.id === R.id.ivSpearP1) {
+            this.p1CharSelect = 2
+        }
+        else if (v.id === R.id.ivSwordP1) {
+            this.p1CharSelect = 1
         }
         // if player is player 2
-        else {
-            p2CharSelect = charId
+        else if (v.id === R.id.ivShieldP2) {
+            this.p2CharSelect = 3
+        }
+        else if (v.id === R.id.ivSpearP2) {
+            this.p2CharSelect = 2
+        }
+        else if (v.id === R.id.ivSwordP2) {
+            this.p2CharSelect = 1
         }
     }
     fun onLock(v: View) {
@@ -48,11 +62,11 @@ class CharacterSelectActivity : AppCompatActivity() {
             else { btP2.text = "LOCKED" }
         }
 
-        if (p1LockStatus == 1 && p2LockStatus == 1) {
-            val i = Intent(this, BattleActivity::class.java)
-            i.putExtra("p1Char", p1CharSelect)
-            i.putExtra("p2Char", p2CharSelect)
-            startActivity(i)
+        if (p1LockStatus == 1 && p2LockStatus == 1 && p1CharSelect > 0 && p2CharSelect > 0) {
+            val intent = Intent(this, BattleActivity::class.java)
+            intent.putExtra("p1", p1CharSelect.toString())
+            intent.putExtra("p2", p2CharSelect.toString())
+            startActivity(intent)
             finish()
         }
     }

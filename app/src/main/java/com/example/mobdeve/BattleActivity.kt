@@ -32,11 +32,11 @@ class BattleActivity : AppCompatActivity() {
 //
 //        }
 
-        fun end(v: View){
-            val intent = Intent(this, TitleActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
+    }
+    
+    fun end(v: View){
+        val intent = Intent(this, TitleActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

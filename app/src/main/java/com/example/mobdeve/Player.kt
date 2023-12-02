@@ -31,9 +31,9 @@ class Player(context: Context, charId: Int) {
             this.normal_attack = Attack(1, 5, 2)
             this.special_attack = Attack(3, 5, 4)
             this.speed = 100
-            this.def_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
-            this.att_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
-            this.spa_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
+            this.def_hitbox = arrayOf(intArrayOf(21,35), intArrayOf(32,35), intArrayOf(21,8), intArrayOf(32,8))
+            this.att_hitbox = arrayOf(intArrayOf(16,36), intArrayOf(60,32), intArrayOf(32,15), intArrayOf(55,9))
+            this.spa_hitbox = arrayOf(intArrayOf(39,27), intArrayOf(54,27), intArrayOf(39,5), intArrayOf(54,5))
         }
         // spear character
         else if (charId == 2) {

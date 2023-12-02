@@ -30,7 +30,10 @@ class BattleActivity : AppCompatActivity() {
         val height = displayMetrics.heightPixels
         val width = displayMetrics.widthPixels
 
-        this.battle = Battle(p1, p2, height, width)
+        val arena_height = 0
+        val arena_width = 0
+
+        this.battle = Battle(p1, p2, arena_height, arena_width)
 
 //         main game loop
 //        while (true) {

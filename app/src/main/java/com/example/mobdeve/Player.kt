@@ -1,6 +1,7 @@
 package com.example.mobdeve
 
 import android.content.Context
+import android.graphics.Rect
 
 class Player(context: Context, charId: Int) {
     // 1 - sword, 2 - spear, 3 - shield
@@ -13,7 +14,9 @@ class Player(context: Context, charId: Int) {
     lateinit var normal_attack : Attack
     lateinit var special_attack : Attack
     var spriteSheet: SpriteSheet
-    var dir: Float = 0F
+    lateinit var def_hitbox: Array<IntArray>
+    lateinit var att_hitbox: Array<IntArray>
+    lateinit var spa_hitbox: Array<IntArray>
 
     init {
         this.charId = charId
@@ -26,18 +29,27 @@ class Player(context: Context, charId: Int) {
             this.hp = 150
             this.normal_attack = Attack(1, 5, 2)
             this.special_attack = Attack(3, 5, 4)
+            this.def_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
+            this.att_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
+            this.spa_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
         }
         // spear character
         else if (charId == 2) {
             this.hp = 120
             this.normal_attack = Attack(1, 4, 1)
             this.special_attack = Attack(1, 1, 3)
+            this.def_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
+            this.att_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
+            this.spa_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
         }
         // shield character
         else if (charId == 3) {
             this.hp = 200
             this.normal_attack = Attack(2, 6, 2)
             this.special_attack = Attack(0, 6, 2)
+            this.def_hitbox = arrayOf(intArrayOf(23,48), intArrayOf(42,48), intArrayOf(23,6), intArrayOf(42,6))
+            this.att_hitbox = arrayOf(intArrayOf(49,35), intArrayOf(59,35), intArrayOf(49,9), intArrayOf(59,9))
+            this.spa_hitbox = arrayOf(intArrayOf(33,36), intArrayOf(43,36), intArrayOf(33,10), intArrayOf(43,10))
         }
         else {
             print("ERR: Character not found.")

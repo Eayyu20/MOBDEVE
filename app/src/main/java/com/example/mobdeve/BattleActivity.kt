@@ -19,8 +19,8 @@ import androidx.core.content.res.ResourcesCompat
 // updating player data needs to be done via Battle.kt
 
 class BattleActivity : AppCompatActivity() {
-//    lateinit var battle: Battle
-//    lateinit var display: BattleDisplay
+    lateinit var battle: Battle
+    lateinit var display: BattleDisplay
 
     lateinit var mCanvas: Canvas
     lateinit var mPaint: Paint
@@ -35,8 +35,8 @@ class BattleActivity : AppCompatActivity() {
         val p1CharId = intent.getStringExtra("p1")
         val p2CharId = intent.getStringExtra("p2")
 
-//        var p1 : Player = Player(this, Integer.parseInt(p1CharId))
-//        var p2 : Player = Player(this, Integer.parseInt(p2CharId))
+        var p1 : Player = Player(this, Integer.parseInt(p1CharId))
+        var p2 : Player = Player(this, Integer.parseInt(p2CharId))
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -47,11 +47,11 @@ class BattleActivity : AppCompatActivity() {
         val arena_height = 0
         val arena_width = 0
 
-//        this.battle = Battle(p1, p2, arena_height, arena_width)
+        this.battle = Battle(p1, p2, arena_height, arena_width)
 
         // Initialize arena Canvas
         val ivArena = findViewById<ImageView>(R.id.ivArena)
-        this.mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        this.mBitmap = Bitmap.createBitmap(width, height/3, Bitmap.Config.ARGB_8888)
         ivArena.setImageBitmap(mBitmap)
         mCanvas = Canvas(mBitmap)
         mCanvas.drawColor(Color.BLUE)

@@ -1,10 +1,5 @@
 package com.example.mobdeve
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Rect
-
 class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SIZE_Y: Int) {
     init {
         this.p1.posX = (this.STAGE_SIZE_X / 2) - 5 // 5 here assumes that the hitbox is centered and half the sprite is 5 units
@@ -20,44 +15,55 @@ class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SI
         this.p1.actionFrame = 0 // frame count
     }
 
-//    fun isColliding(context: Context): Boolean{
-//        val sprite1X = this.p1.posX
-//        val sprite1Y = this.p1.posY
-//
-//        val sprite2X = this.p2.posX
-//        val sprite2Y = this.p2.posY
-//
-//        val player1Bitmap: Bitmap
-//        val player2Bitmap: Bitmap
+    fun update(p1Joystick: Int, p2Joystick: Int, p1normal: Int, p1special: Int, p2normal: Int, p2special: Int) {
+        // movement = speed * direction
+        // if p1normal or p1special or p2normal or p2special
+            // ifCollide
+                // update health, currentAction
+        // update currentAction
+        // update frameCount
+        // idle hard cap = 3
+        // movement hard cap = 5
+        // death hard cap = 4
+        // take damage hard cap = 1 * use death frame 1
+    }
 
-        // TO DO: Update based on sprite sheet implementation
-        // get player 1 attack sprite dimensions
-//        if(this.p1.charId == 1){
-//            player1Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.standing_1)
-//        }else if(this.p1.charId == 2){
-//            player1Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.standing_2)
-//        }else{
-//            player1Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.standing_3)
-//        }
-//
-//        // get player 2 attack sprite dimensions
-//        if(this.p2.charId == 1){
-//            player2Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.standing_1)
-//        }else if(this.p2.charId == 2){
-//            player2Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.standing_2)
-//        }else{
-//            player2Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.standing_3)
-//        }
-//
-//        val sprite1Height = player1Bitmap.height
-//        val sprite1Width = player1Bitmap.width
-//
-//        val sprite2Height = player2Bitmap.height
-//        val sprite2Width = player2Bitmap.width
-//
-//        val rectSprite1 = Rect(sprite1X, sprite1Y, sprite1X + sprite1Width, sprite1Y + sprite1Height)
-//        val rectSprite2 = Rect(sprite2X, sprite2Y, sprite2X + sprite2Width, sprite2Y + sprite2Height)
-//
-//        return Rect.intersects(rectSprite1, rectSprite2)
-//    }
+    fun ifCollide(def: Array<IntArray>, att: Array<IntArray>): Boolean {
+        val rect_lines = arrayOf(
+            intArrayOf(def[1][0] - def[0][0], def[0][1] - def[1][1], def[1][0] - def[0][0] + def[0][1] - def[1][1]),
+            intArrayOf(def[2][0] - def[1][0], def[1][1] - def[2][1], def[2][0] - def[1][0] + def[1][1] - def[2][1]),
+            intArrayOf(def[3][0] - def[2][0], def[2][1] - def[3][1], def[3][0] - def[2][0] + def[2][1] - def[3][1]),
+            intArrayOf(def[0][0] - def[3][0], def[3][1] - def[0][1], def[0][0] - def[3][0] + def[3][1] - def[0][1]),
+            )
+
+        var prevCoord: IntArray = att[0]
+        var currentLine: IntArray
+        var det : Double
+        var intersect_flag : Boolean = false
+        var t : Double
+        var u : Double
+
+        for (coord in att) {
+            if (coord != prevCoord) {
+                currentLine = intArrayOf(coord[0] - prevCoord[0], prevCoord[1] - coord[1], coord[0] - prevCoord[0] + prevCoord[1] - coord[1])
+                for (line in rect_lines) {
+                    det = (currentLine[0] * line[1] - currentLine[1] * line[0]).toDouble()
+                    if (det != 0.0) {
+                        t = (line[2] * currentLine[1] - currentLine[2] * line[1]) / det
+                        u = (line[2] * currentLine[0] - currentLine[2] * line[0]) / det
+                        if (0 <= t && t <= 1 && 0 <= u && u <= 1) {
+                            intersect_flag = true
+                            break
+                        }
+                    }
+                }
+                if (intersect_flag) {
+                    break
+                }
+            }
+            prevCoord = coord
+        }
+
+        return intersect_flag
+    }
 }

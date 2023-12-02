@@ -6,8 +6,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Rect
 
 class SpriteSheet (context: Context, char_type: Int){
-    val SPRITE_WIDTH_PIXELS : Int = 0
-    val SPRITE_HEIGHT_PIXELS : Int = 0
+    val SPRITE_WIDTH_PIXELS : Int = 64
+    val SPRITE_HEIGHT_PIXELS : Int = 64
     var bitmap: Bitmap
 
     init {

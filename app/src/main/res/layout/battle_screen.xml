@@ -69,14 +69,13 @@
                 android:src="@drawable/joystick" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivArena"
+        <SurfaceView
+            android:id="@+id/svArena"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="0dp"
             android:layout_weight="5"
-            android:src="@drawable/joystick" />
+            />
+
 
         <LinearLayout
             android:id="@+id/llP1Ctrls"

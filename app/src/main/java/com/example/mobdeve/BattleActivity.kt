@@ -9,6 +9,7 @@ import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.view.SurfaceView
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
@@ -50,10 +51,10 @@ class BattleActivity : AppCompatActivity() {
         this.battle = Battle(p1, p2, arena_height, arena_width)
 
         // Initialize arena Canvas
-        val ivArena = findViewById<ImageView>(R.id.ivArena)
-        this.mBitmap = Bitmap.createBitmap(width, height/3, Bitmap.Config.ARGB_8888)
-        ivArena.setImageBitmap(mBitmap)
-        mCanvas = Canvas(mBitmap)
+        val svArena = findViewById<SurfaceView>(R.id.svArena)
+//        this.mBitmap = Bitmap.createBitmap(width, height/3, Bitmap.Config.ARGB_8888)
+//        svArena.setImageBitmap(mBitmap)
+        mCanvas = Canvas()
         mCanvas.drawColor(Color.BLUE)
 
 //        this.display = BattleDisplay(this.battle)

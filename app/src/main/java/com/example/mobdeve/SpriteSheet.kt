@@ -4,8 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Rect
-import androidx.core.graphics.times
-
 
 class SpriteSheet (context: Context, char_type: Int){
     val SPRITE_WIDTH_PIXELS : Int = 0
@@ -33,7 +31,6 @@ class SpriteSheet (context: Context, char_type: Int){
     fun getBM(): Bitmap {
         return this.bitmap
     }
-
     fun getSprite(idxRow: Int, idxCol: Int): Sprite {
         return Sprite(this, Rect(idxCol * SPRITE_WIDTH_PIXELS, idxRow * SPRITE_HEIGHT_PIXELS,(idxCol + 1) * SPRITE_WIDTH_PIXELS,(idxRow + 1) * SPRITE_HEIGHT_PIXELS))
     }

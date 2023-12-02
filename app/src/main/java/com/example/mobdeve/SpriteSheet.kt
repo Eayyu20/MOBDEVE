@@ -7,7 +7,7 @@ import android.graphics.Rect
 import androidx.core.graphics.times
 
 
-class SpriteSheet (context: Context){
+class SpriteSheet (context: Context, char_type: Int){
     val SPRITE_WIDTH_PIXELS : Int = 0
     val SPRITE_HEIGHT_PIXELS : Int = 0
     var bitmap: Bitmap
@@ -15,7 +15,19 @@ class SpriteSheet (context: Context){
     init {
         var bitmapOptions = BitmapFactory.Options()
         bitmapOptions.inScaled = false
-        this.bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.spear_spritesheet, bitmapOptions)
+        if (char_type == 1) {
+            this.bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sword_spritesheet, bitmapOptions)
+        }
+        else if (char_type == 2) {
+            this.bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.spear_spritesheet, bitmapOptions)
+        }
+        else if (char_type == 3) {
+            this.bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.shield_spritesheet, bitmapOptions)
+        }
+        // if error, default to sword
+        else {
+            this.bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sword_spritesheet, bitmapOptions)
+        }
     }
 
     fun getBitmap(): Bitmap {

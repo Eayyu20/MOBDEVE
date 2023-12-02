@@ -1,6 +1,8 @@
 package com.example.mobdeve
 
-class Player(charId: Int) {
+import android.content.Context
+
+class Player(context: Context, charId: Int) {
     // 1 - sword, 2 - spear, 3 - shield
     var charId: Int = 0
     var hp: Int = 100
@@ -10,9 +12,15 @@ class Player(charId: Int) {
     var actionFrame: Int = 0
     lateinit var normal_attack : Attack
     lateinit var special_attack : Attack
+    var spriteSheet: SpriteSheet
+    var dir: Float = 0F
 
     init {
         this.charId = charId
+
+        // initialize spriteSheet
+        this.spriteSheet = SpriteSheet(context, charId)
+
         // sword character
         if (charId == 1) {
             this.hp = 150

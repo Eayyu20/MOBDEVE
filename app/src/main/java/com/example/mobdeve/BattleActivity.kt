@@ -14,20 +14,8 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 
-// This file should only instantiate the different classes and variables as well as hold the main loop.
-// think of it as the controller that ensures the correct data can be passed to from the model to the gui
-// updating the canvas object needs to be done in BattleDisplay.kt
-// updating player data needs to be done via Battle.kt
-
 class BattleActivity : AppCompatActivity() {
     lateinit var battle: Battle
-    lateinit var display: BattleDisplay
-
-    lateinit var mCanvas: Canvas
-    lateinit var mPaint: Paint
-    lateinit var mBitmap: Bitmap
-
-    var mColorBackground = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,22 +40,10 @@ class BattleActivity : AppCompatActivity() {
 
         // Initialize arena Canvas
         val svArena = findViewById<SurfaceView>(R.id.svArena)
-//        this.mBitmap = Bitmap.createBitmap(width, height/3, Bitmap.Config.ARGB_8888)
-//        svArena.setImageBitmap(mBitmap)
-        mCanvas = Canvas()
-        mCanvas.drawColor(Color.BLUE)
-
-//        this.display = BattleDisplay(this.battle)
-
-//         main game loop
-//        while (true) {
-//
-//        }
 
     }
 
-
-    fun end(v: View){
+    fun end(v: View) {
         val intent = Intent(this, TitleActivity::class.java)
         startActivity(intent)
         finish()

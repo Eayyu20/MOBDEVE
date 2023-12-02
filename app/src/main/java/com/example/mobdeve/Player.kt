@@ -4,8 +4,8 @@ class Player(charId: Int) {
     // 1 - sword, 2 - spear, 3 - shield
     var charId: Int = 0
     var hp: Int = 100
-    var posX: Float = 0F
-    var posY: Float = 0F
+    var posX: Int = 0
+    var posY: Int = 0
     var currentAction : Int = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
     var actionFrame: Int = 0
     lateinit var normal_attack : Attack

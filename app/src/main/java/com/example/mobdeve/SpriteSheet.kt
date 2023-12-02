@@ -30,8 +30,8 @@ class SpriteSheet (context: Context, char_type: Int){
         }
     }
 
-    fun getBitmap(): Bitmap {
-        return bitmap
+    fun getBM(): Bitmap {
+        return this.bitmap
     }
 
     fun getSprite(idxRow: Int, idxCol: Int): Sprite {

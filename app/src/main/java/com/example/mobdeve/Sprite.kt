@@ -8,7 +8,7 @@ import android.graphics.Rect
 class Sprite (val spriteSheet : SpriteSheet, val rect : Rect){
     fun draw(canvas: Canvas, x: Int, y: Int) {
         canvas.drawBitmap(
-            this.spriteSheet.getBitmap(),
+            this.spriteSheet.getBM(),
             rect,
             Rect(attr.x, attr.y, attr.x + getWidth(), attr.y + getHeight()),
             null

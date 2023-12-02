@@ -2,6 +2,7 @@ package com.example.mobdeve
 
 class Player(charId: Int) {
     // 1 - sword, 2 - spear, 3 - shield
+    var charId: Int = 0
     var hp: Int = 100
     var posX: Float = 0F
     var posY: Float = 0F
@@ -11,6 +12,7 @@ class Player(charId: Int) {
     lateinit var special_attack : Attack
 
     init {
+        this.charId = charId
         // sword character
         if (charId == 1) {
             this.hp = 150

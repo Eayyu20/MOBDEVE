@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 
 class BattleActivity : AppCompatActivity() {
+    lateinit var battle: Battle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.battle_screen)
@@ -18,6 +19,8 @@ class BattleActivity : AppCompatActivity() {
 
         var p1 : Player = Player(Integer.parseInt(p1CharId))
         var p2 : Player = Player(Integer.parseInt(p2CharId))
+
+        this.battle = Battle(p1, p2)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 

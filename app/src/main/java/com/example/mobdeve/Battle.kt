@@ -1,10 +1,5 @@
 package com.example.mobdeve
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Rect
-
 class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SIZE_Y: Int) {
     init {
         this.p1.posX = (this.STAGE_SIZE_X / 2) - 5 // 5 here assumes that the hitbox is centered and half the sprite is 5 units
@@ -21,7 +16,16 @@ class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SI
     }
 
     fun update(p1Joystick: Int, p2Joystick: Int, p1normal: Int, p1special: Int, p2normal: Int, p2special: Int) {
-
+        // movement = speed * direction
+        // if p1normal or p1special or p2normal or p2special
+            // ifCollide
+                // update health, currentAction
+        // update currentAction
+        // update frameCount
+        // idle hard cap = 3
+        // movement hard cap = 5
+        // death hard cap = 4
+        // take damage hard cap = 1 * use death frame 1
     }
 
     fun ifCollide(def: Array<IntArray>, att: Array<IntArray>): Boolean {

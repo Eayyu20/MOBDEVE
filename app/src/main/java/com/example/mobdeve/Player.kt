@@ -41,9 +41,9 @@ class Player(context: Context, charId: Int) {
             this.normal_attack = Attack(1, 4, 1)
             this.special_attack = Attack(1, 1, 3)
             this.speed = 120
-            this.def_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
-            this.att_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
-            this.spa_hitbox = arrayOf(intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0), intArrayOf(0,0))
+            this.def_hitbox = arrayOf(intArrayOf(25,31), intArrayOf(23,31), intArrayOf(26,4), intArrayOf(33,4))
+            this.att_hitbox = arrayOf(intArrayOf(28,19), intArrayOf(57,19))
+            this.spa_hitbox = arrayOf(intArrayOf(18,60), intArrayOf(47,53), intArrayOf(29,14), intArrayOf(56,23))
         }
         // shield character
         else if (charId == 3) {

@@ -38,7 +38,7 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
 
     init {
         setWillNotDraw(false)
-//        alpha = 0F
+        alpha = 0F
         setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(view: View, event: MotionEvent): Boolean {
                 if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
@@ -63,7 +63,7 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
             canvas.drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
             canvas.drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)
             holder.unlockCanvasAndPost(canvas)
-            Log.w(this.javaClass.name, "onDraw success " + innerCircleX.toString() + " " + innerCircleY.toString() )
+            Log.w(this.javaClass.name, "X: " + innerCircleX.toString() + " Y: " + innerCircleY.toString() )
         }
 
     }

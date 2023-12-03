@@ -25,13 +25,6 @@ class BattleActivity : AppCompatActivity() {
     lateinit var battle: Battle
     lateinit var arena: SurfaceView
 
-    var isAPressedPlayer1: Boolean = false
-    var isBPressedPlayer1: Boolean = false
-    var isAPressedPlayer2: Boolean = false
-    var isBPressedPlayer2: Boolean = false
-    var player1MovementAngle: Int = 0
-    var player2MovementAngle: Int = 0
-
     lateinit var p1: Player
     lateinit var p2: Player
 
@@ -52,17 +45,7 @@ class BattleActivity : AppCompatActivity() {
         this.p1 = Player(this, Integer.parseInt(p1CharId))
         this.p2 = Player(this, Integer.parseInt(p2CharId))
 
-
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
-        val displayMetrics = DisplayMetrics()
-        val height = displayMetrics.heightPixels
-        val width = displayMetrics.widthPixels
-
-        val arena_height = 0
-        val arena_width = 0
-
-        this.battle = Battle(p1, p2, arena_height, arena_width)
+        this.battle = Battle(p1, p2, arena.height, arena.width)
 
         // Initialize map
         this.arena = findViewById<SurfaceView>(R.id.arena)

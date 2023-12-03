@@ -24,15 +24,30 @@ class CharacterSelectActivity : AppCompatActivity() {
     private var p1Idle: Boolean = true
     private var p2Idle: Boolean = true
 
+    private val swordDesc: String = "A strong fighter that harnesses the power of the sun to defeat his foes.\n\n[A] Normal Attack: Performs his ritual to deal 10 damage in a cone in front of him.\n\n[B] Special Attack: Releases a powerful slash, dealing 18 damage to foes in front of him."
+    private val spearDesc: String = "Fierce and combative. She cleverly uses her nimbleness and long range to whittle down her opponents until she can land the final blow.\n\n[A] Normal Attack: Pierces in front of her to deal 8 damage.\n\n[B] Special Attack: Swings her spear upwards, covering more space to deal 14 damage."
+    private val shieldDesc: String = "With a resilient body that has gone through countless of battles, he uses his wits to outsmart his opponents. Get too close to him and you'll learn what hurt means.\n\n[A] Normal Attack: Swings his shield to deal 12 damage.\n\n[B] Special Attack: Throws himself forward to deal 20 damage."
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.character_select)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Initialize Sword as 1st choice
+        findViewById<ImageView>(R.id.ivSwordP1).setBackgroundColor(Color.parseColor("#2187ab"))
+        findViewById<ImageView>(R.id.ivSwordP2).setBackgroundColor(Color.parseColor("#943838"))
+        findViewById<TextView>(R.id.tvCharacclassP1).text = "Sword"
+        findViewById<TextView>(R.id.tvCharacclassP2).text = "Sword"
+        findViewById<TextView>(R.id.tvCharacdescP1).text = swordDesc
+        findViewById<TextView>(R.id.tvCharacdescP2).text = swordDesc
+
     }
     fun onCharSelect(v: View) {
         lateinit var charaView: ImageView
         lateinit var classname: String
+
+        Log.e("TAG", v.id.toString())
 
         // if player is player 1
         if ((v.id === R.id.ivShieldP1) && (p1LockStatus == -1)) {
@@ -48,6 +63,10 @@ class CharacterSelectActivity : AppCompatActivity() {
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()))
             classname = "Shield"
 
+            // show character details
+            findViewById<TextView>(R.id.tvCharacclassP1).text = classname
+            findViewById<TextView>(R.id.tvCharacdescP1).text = shieldDesc
+
         }
         else if ((v.id === R.id.ivSpearP1) && (p1LockStatus == -1)) {
             this.p1CharSelect = 2
@@ -62,6 +81,10 @@ class CharacterSelectActivity : AppCompatActivity() {
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()))
             classname = "Spear"
 
+            // show character details
+            findViewById<TextView>(R.id.tvCharacclassP1).text = classname
+            findViewById<TextView>(R.id.tvCharacdescP1).text = spearDesc
+
         }
         else if ((v.id === R.id.ivSwordP1) && (p1LockStatus == -1)){
             this.p1CharSelect = 1
@@ -75,6 +98,10 @@ class CharacterSelectActivity : AppCompatActivity() {
             charaView = findViewById<ImageView>(R.id.ivCharacviewP1)
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()))
             classname = "Sword"
+
+            // show character details
+            findViewById<TextView>(R.id.tvCharacclassP1).text = "Sword"
+            findViewById<TextView>(R.id.tvCharacdescP1).text = swordDesc
         }
         // if player is player 2
         else if ((v.id === R.id.ivShieldP2) && (p2LockStatus == -1)){
@@ -89,6 +116,10 @@ class CharacterSelectActivity : AppCompatActivity() {
             charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()))
             classname = "Shield"
+
+            // show character details
+            findViewById<TextView>(R.id.tvCharacclassP2).text = classname
+            findViewById<TextView>(R.id.tvCharacdescP2).text = shieldDesc
         }
         else if ((v.id === R.id.ivSpearP2) && (p2LockStatus == -1)) {
             this.p2CharSelect = 2
@@ -102,6 +133,10 @@ class CharacterSelectActivity : AppCompatActivity() {
             charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()))
             classname = "Spear"
+
+            // show character details
+            findViewById<TextView>(R.id.tvCharacclassP2).text = classname
+            findViewById<TextView>(R.id.tvCharacdescP2).text = spearDesc
 
         }
         else if ((v.id === R.id.ivSwordP2) && (p2LockStatus == -1)) {
@@ -117,6 +152,9 @@ class CharacterSelectActivity : AppCompatActivity() {
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()))
             classname = "Sword"
 
+            // show character details
+            findViewById<TextView>(R.id.tvCharacclassP2).text = classname
+            findViewById<TextView>(R.id.tvCharacdescP2).text = swordDesc
         }
 
 //        animateIdle(classname, charaView)
@@ -150,7 +188,7 @@ class CharacterSelectActivity : AppCompatActivity() {
     fun Attack (v: View) {
         lateinit var charaView: ImageView
         lateinit var classname: String
-
+        Log.e("TAG", v.id.toString())
         if (v.id === R.id.ivCharacviewP1) {
             charaView = findViewById<ImageView>(R.id.ivCharacviewP1)
             classname = findViewById<TextView>(R.id.tvCharacclassP1).text.toString();
@@ -166,7 +204,7 @@ class CharacterSelectActivity : AppCompatActivity() {
     }
 
     fun animateIdle(classname: String, charaView: ImageView){
-        val handler = Handler()
+        var handler = Handler()
         if (classname == "Spear"){
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()));
             handler.postDelayed(Runnable() {
@@ -217,57 +255,48 @@ class CharacterSelectActivity : AppCompatActivity() {
         }
     }
     fun animateAttack (classname: String, charaView: ImageView) {
-        val handler = Handler()
+        var handler = Handler()
+        val nSpearframes = 4
+        val nSwordframes = 6
+        val nShieldframes = 3
+
         if (classname == "Spear"){
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()));
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_na_1, applicationContext.getTheme()));
-            }, 250)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_na_2, applicationContext.getTheme()));
-            }, 250)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_na_3, applicationContext.getTheme()));
-            }, 250)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_na_4, applicationContext.getTheme()));
-            }, 250)
+            for (i in 0..nSpearframes){
+                Log.e("TAG", i.toString())
+                handler.postDelayed(Runnable() {
+                    if (i == 0) charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()))
+                    else if (i == 1) charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_na_1, applicationContext.getTheme()))
+                    else if (i == 2) charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_na_2, applicationContext.getTheme()))
+                    else if (i == 3) charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_na_3, applicationContext.getTheme()))
+                    else if (i == 4) charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_na_4, applicationContext.getTheme()))
+               }, 250)
+            }
         }
         else if (classname == "Sword"){
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()));
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_1, applicationContext.getTheme()));
-            }, 166)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_2, applicationContext.getTheme()));
-            }, 166)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_3, applicationContext.getTheme()));
-            }, 166)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_4, applicationContext.getTheme()));
-            }, 166)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_5, applicationContext.getTheme()));
-            }, 166)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_6, applicationContext.getTheme()));
-            }, 166)
+            for (i in 0..nSwordframes){
+                Log.e("TAG", i.toString())
+                handler.postDelayed(Runnable() {
+                    if (i == 0) charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()))
+                    else if (i == 1) charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_1, applicationContext.getTheme()))
+                    else if (i == 2) charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_2, applicationContext.getTheme()))
+                    else if (i == 3) charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_3, applicationContext.getTheme()))
+                    else if (i == 4) charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_4, applicationContext.getTheme()))
+                    else if (i == 5) charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_5, applicationContext.getTheme()))
+                    else if (i == 6) charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_na_6, applicationContext.getTheme()))
+               }, 166)
+            }
         }
         else if (classname == "Shield"){
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()))
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_na_1, applicationContext.getTheme()));
-            }, 333)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_na_2, applicationContext.getTheme()));
-            }, 333)
-            handler.postDelayed(Runnable() {
-                charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_na_3, applicationContext.getTheme()));
-            }, 333)
+            for (i in 0..nShieldframes){
+                handler.postDelayed(Runnable() {
+                    if (i == 0) charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()))
+                    else if (i == 1) charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_na_1, applicationContext.getTheme()))
+                    else if (i == 2) charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_na_2, applicationContext.getTheme()))
+                    else if (i == 3) charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_na_3, applicationContext.getTheme()))
+               }, 333)
+            }
         }
     }
-
     fun goBack(v: View){
         val intent = Intent(this, TitleActivity::class.java)
         startActivity(intent)

@@ -10,11 +10,7 @@ import android.view.View
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-class Joystick @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+class Joystick(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val outerCirclePaint = Paint().apply {
         color = Color.GRAY
@@ -47,6 +43,7 @@ class Joystick @JvmOverloads constructor(
                 else if (event.action == MotionEvent.ACTION_UP){
                     resetJoystick()
                 }
+                view.performClick()
                 return false
             }
         })

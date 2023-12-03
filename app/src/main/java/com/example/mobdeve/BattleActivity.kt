@@ -2,7 +2,11 @@ package com.example.mobdeve
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.os.Build.VERSION_CODES.R
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -10,6 +14,7 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import java.lang.Exception
@@ -33,7 +38,7 @@ class BattleActivity : AppCompatActivity() {
     lateinit var player1BButton: ImageView
     lateinit var player2AButton: ImageView
     lateinit var player2BButton: ImageView
-    lateinit var player1Joystick: Joystick
+    lateinit var player1Joystick : Joystick
     lateinit var player2Joystick: Joystick
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +51,17 @@ class BattleActivity : AppCompatActivity() {
         this.p1 = Player(this, Integer.parseInt(p1CharId))
         this.p2 = Player(this, Integer.parseInt(p2CharId))
 
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        val displayMetrics = DisplayMetrics()
+        val height = displayMetrics.heightPixels
+        val width = displayMetrics.widthPixels
 
         val arena_height = 0
         val arena_width = 0
+
+        this.battle = Battle(p1, p2, arena_height, arena_width)
 
         // Initialize map
         this.arena = findViewById<SurfaceView>(R.id.arena)
@@ -61,8 +73,6 @@ class BattleActivity : AppCompatActivity() {
 
         this.player1Joystick = findViewById<Joystick>(R.id.player1joystick)
         this.player2Joystick = findViewById<Joystick>(R.id.player2joystick)
-
-        this.battle = Battle(p1, p2, arena_height, arena_width)
     }
 
     fun end(v: View) {

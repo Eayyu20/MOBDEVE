@@ -43,7 +43,7 @@
                 android:id="@+id/llP2Charac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10sp"
+                android:layout_marginBottom="5sp"
                 android:layout_weight="1"
                 android:gravity="bottom">
 
@@ -134,8 +134,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:rotation="180"
-                        android:text="A strong fighter that harnesses the power of the sun to defeat his foes.\n\n[A] Normal Attack: Performs his ritual to deal 9 damage in a cone in front of him.\n\n[B] Special Attack: Releases a powerful slash in front of him, dealing 15 damage to foes in front of him." />
+                        android:minHeight="230sp"
+                        android:paddingRight="10sp"
+                        android:rotation="180" />
 
 
                     <TextView
@@ -146,7 +147,6 @@
                         android:layout_weight="0"
                         android:fontFamily="sans-serif-black"
                         android:rotation="180"
-                        android:text="Sword"
                         android:textSize="24sp" />
 
 
@@ -158,6 +158,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:minWidth="250sp"
+                    android:onClick="Attack"
                     android:rotation="180"
                     android:scaleX="0.75"
                     android:scaleY="0.75"
@@ -218,7 +219,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:fontFamily="sans-serif-black"
-                        android:text="Sword"
                         android:textSize="24sp" />
 
                     <TextView
@@ -226,7 +226,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="A strong fighter that harnesses the power of the sun to defeat his foes.\n\n[A] Normal Attack: Performs his ritual to deal 9 damage in a cone in front of him.\n\n[B] Special Attack: Releases a powerful slash in front of him, dealing 15 damage to foes in front of him." />
+                        android:minHeight="220sp"
+                        android:paddingRight="10sp" />
 
                     <Button
                         android:id="@+id/btP1Lock"
@@ -254,7 +255,7 @@
                 android:id="@+id/llP1Charac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
+                android:layout_marginTop="5sp"
                 android:layout_weight="1"
                 android:gravity="bottom">
 

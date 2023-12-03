@@ -16,6 +16,7 @@ import android.view.SurfaceView
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
 import java.lang.Exception
 import com.example.mobdeve.Joystick

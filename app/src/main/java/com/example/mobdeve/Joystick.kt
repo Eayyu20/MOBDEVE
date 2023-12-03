@@ -5,12 +5,18 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
+import android.view.SurfaceHolder
+import android.view.SurfaceView
 import android.view.View
+import org.w3c.dom.Attr
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-class Joystick(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, attrs) {
+
+    private var holder: SurfaceHolder = getHolder()
 
     private val outerCirclePaint = Paint().apply {
         color = Color.GRAY
@@ -31,6 +37,8 @@ class Joystick(context: Context, attrs: AttributeSet) : View(context, attrs) {
     var angle : Float = 0F
 
     init {
+        setWillNotDraw(false)
+//        alpha = 0F
         setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(view: View, event: MotionEvent): Boolean {
                 if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
@@ -49,12 +57,15 @@ class Joystick(context: Context, attrs: AttributeSet) : View(context, attrs) {
         })
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-        canvas.apply {
-            drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
-            drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)
+    override fun onDraw(c : Canvas) {
+        if (holder.surface.isValid()) {
+            var canvas: Canvas = holder.lockCanvas()
+            canvas.drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
+            canvas.drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)
+            holder.unlockCanvasAndPost(canvas)
+            Log.w(this.javaClass.name, "onDraw success " + innerCircleX.toString() + " " + innerCircleY.toString() )
         }
+
     }
 
     private fun resetJoystick() {

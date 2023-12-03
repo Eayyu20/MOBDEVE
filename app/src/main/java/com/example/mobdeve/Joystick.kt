@@ -10,41 +10,27 @@ import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
-import org.w3c.dom.Attr
 import kotlin.math.atan2
-import kotlin.math.sqrt
 
-class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, attrs) {
+class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, attrs), SurfaceHolder.Callback{
 
-    private var holder: SurfaceHolder = getHolder()
-
-    private val outerCirclePaint = Paint().apply {
-        color = Color.GRAY
-        style = Paint.Style.FILL
-    }
-
-    private val innerCirclePaint = Paint().apply {
-        color = Color.RED
-        style = Paint.Style.FILL
-    }
-
-    private var centerX: Float = 0F
-    private var centerY: Float = 0F
-    private var innerCircleRadius: Float = 0f
-    var innerCircleX: Float = 0F
-    var innerCircleY: Float = 0F
-
-    var angle : Float = 0F
+    private lateinit var canvas: Canvas
+    private var centerX: Float = (width / 2).toFloat()
+    private var centerY: Float = (height / 2).toFloat()
+    private var innerCircleRadius: Float = 100F
+    private var innerCircleX: Float = (width / 2).toFloat()
+    private var innerCircleY: Float = (height / 2).toFloat()
+    private var angle: Float = 0F
 
     init {
-        setWillNotDraw(false)
-//        alpha = 0F
+        holder.addCallback(this)
+
         setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(view: View, event: MotionEvent): Boolean {
                 if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
                     innerCircleX = event.x
                     innerCircleY = event.y
-                    angle = Math.toDegrees(atan2((event.y - centerY).toDouble(), (event.x - centerX).toDouble())).toFloat()
+                    angle = atan2((event.y - centerY).toDouble(), (event.x - centerX).toDouble()).toFloat()
                     if (innerCircleX > 350) {
                         innerCircleX = 350F
                     }
@@ -57,6 +43,9 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
                     else if (innerCircleY < -350) {
                         innerCircleY = -350F
                     }
+
+                    Log.w("ANGLE", angle.toString())
+
                     invalidate()
                     return true
                 }
@@ -69,14 +58,39 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
         })
     }
 
-    override fun onDraw(c : Canvas) {
-        if (holder.surface.isValid()) {
-            var canvas: Canvas = holder.lockCanvas()
-            canvas.drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
-            canvas.drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)
-            holder.unlockCanvasAndPost(canvas)
-            Log.w(this.javaClass.name, "X: " + innerCircleX.toString() + " Y: " + innerCircleY.toString())
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        drawOnCanvas(holder)
+    }
+
+    override fun surfaceCreated(holder: SurfaceHolder) {
+        drawOnCanvas(holder)
+    }
+
+    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+        // Handle surface changes if needed
+    }
+
+    override fun surfaceDestroyed(holder: SurfaceHolder) {
+        // Handle surface destruction if nee
+    }
+
+    private fun drawOnCanvas(holder: SurfaceHolder) {
+        canvas = holder.lockCanvas()
+        val outerCirclePaint = Paint().apply {
+            color = Color.GRAY
+            style = Paint.Style.FILL
         }
+
+        val innerCirclePaint = Paint().apply {
+            color = Color.RED
+            style = Paint.Style.FILL
+        }
+
+        canvas.drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
+        canvas.drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)
+
+        holder.unlockCanvasAndPost(canvas)
     }
 
     private fun resetJoystick() {

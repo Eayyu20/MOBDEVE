@@ -81,6 +81,7 @@ class BattleActivity : AppCompatActivity() {
         player2Joystick = findViewById<Joystick>(R.id.player2joystick)
 
         Log.w("p1js", player1Joystick.toString() + " h: " + player1Joystick.height.toString() + " w: " + player1Joystick.width.toString())
+
     }
 
     fun end(v: View) {

@@ -7,6 +7,7 @@ import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.ImageView
@@ -56,6 +57,59 @@ class BattleActivity : AppCompatActivity() {
         player1BButton = findViewById<ImageView>(R.id.player1BButton)
         player2AButton = findViewById<ImageView>(R.id.player2AButton)
         player2BButton = findViewById<ImageView>(R.id.player2BButton)
+
+        player1AButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // The user touched the screen
+                    p1ABool = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // The user lifted their finger
+                    p1ABool = false
+                }
+            }
+            false
+        }
+        player1BButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // The user touched the screen
+                    p1BBool = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // The user lifted their finger
+                    p1BBool = false
+                }
+            }
+            false
+        }
+        player2AButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // The user touched the screen
+                    p2ABool = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // The user lifted their finger
+                    p2ABool = false
+                }
+            }
+            false
+        }
+        player2BButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // The user touched the screen
+                    p2BBool = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // The user lifted their finger
+                    p2BBool = false
+                }
+            }
+            false
+        }
 
         player1Joystick = findViewById<Joystick>(R.id.player1joystick)
         player2Joystick = findViewById<Joystick>(R.id.player2joystick)

@@ -161,7 +161,7 @@
                     android:rotation="180"
                     android:scaleX="0.75"
                     android:scaleY="0.75"
-                    android:src="@tools:sample/avatars"
+                    android:src="@drawable/standing_1"
                     app:srcCompat="@drawable/standing_1"
                     tools:srcCompat="@drawable/standing_1" />
 

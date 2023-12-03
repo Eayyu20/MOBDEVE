@@ -1,6 +1,5 @@
 package com.example.mobdeve
 
-import com.example.mobdeve.R
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Build.VERSION_CODES.R

@@ -26,85 +26,44 @@ class Joystick @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
-    private var centerX: Float = 0f
-    private var centerY: Float = 0f
+    private var centerX: Float = 0F
+    private var centerY: Float = 0F
     private var innerCircleRadius: Float = 0f
-    private var joystickCallback: JoystickListener? = null
+    var innerCircleX: Float = 0F
+    var innerCircleY: Float = 0F
 
-    private var joystickId: Int = -1
+    var angle : Float = 0F
 
     init {
-        setOnTouchListener{ view, motionEvent -> true}
-    }
-
-    override fun onSizeChanged(newWidth: Int, newHeight: Int, oldWidth: Int, oldHeight: Int) {
-        super.onSizeChanged(newWidth, newHeight, oldWidth, oldHeight)
-        centerX = newWidth / 2f
-        centerY = newHeight / 2f
-        innerCircleRadius = (newWidth.coerceAtMost(newHeight) / 4).toFloat()
+        setOnTouchListener(object: View.OnTouchListener {
+            override fun onTouch(view: View, event: MotionEvent): Boolean {
+                if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
+                    innerCircleX = event.x
+                    innerCircleY = event.y
+                    angle = Math.toDegrees(atan2((event.y - centerY).toDouble(), (event.x - centerX).toDouble())).toFloat()
+                    invalidate()
+                    return true
+                }
+                else if (event.action == MotionEvent.ACTION_UP){
+                    resetJoystick()
+                }
+                return false
+            }
+        })
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.apply {
             drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
-            drawCircle(centerX, centerY, innerCircleRadius, innerCirclePaint)
+            drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)
         }
     }
-
-    private fun handleTouch(event: MotionEvent) {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                val displacement = calculateDistance(event.x, event.y)
-                if (displacement <= innerCircleRadius) {
-                    invalidate()
-                    val displacementX = event.x - centerX
-                    val displacementY = event.y - centerY
-                    joystickCallback?.onJoystickMoved(displacementX, displacementY)
-                    val angle = Math.toDegrees(atan2(displacementY.toDouble(), displacementX.toDouble())).toFloat()
-                    joystickCallback?.onAngleChanged(this, angle)
-                } else {
-                    val ratio = innerCircleRadius / displacement
-                    val constrainedX = centerX + (event.x - centerX) * ratio
-                    val constrainedY = centerY + (event.y - centerY) * ratio
-                    invalidate()
-                    joystickCallback?.onJoystickMoved(constrainedX - centerX, constrainedY - centerY)
-                }
-            }
-            MotionEvent.ACTION_UP -> {
-                resetJoystick()
-            }
-        }
-    }
-
-    private fun calculateDistance(x: Float, y: Float): Float {
-        val displacementX = x - centerX
-        val displacementY = y - centerY
-        val distance = sqrt(displacementX * displacementX + displacementY * displacementY).toFloat()
-
-        return distance.toFloat()
-    }
-
 
     private fun resetJoystick() {
+        innerCircleX = 0F
+        innerCircleY = 0F
+        angle = 0F
         invalidate()
-        joystickCallback?.onJoystickMoved(0f, 0f)
-    }
-
-    fun setJoystickId(id: Int) {
-        joystickId = id
-    }
-
-    fun getJoystickId(): Int {
-        return joystickId
-    }
-
-    fun setJoystickListener(listener: JoystickListener) {
-        joystickCallback = listener
-    }
-
-    interface JoystickListener {
-        fun onJoystickMoved(xPercent: Float, yPercent: Float)
-        fun onAngleChanged(joystick: Joystick, angle: Float)
     }
 }

@@ -51,7 +51,6 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
                 }
                 else if (event.action == MotionEvent.ACTION_UP){
                     resetJoystick()
-                    Log.w("resetJoystick", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
                 }
                 view.performClick()
                 return false
@@ -112,7 +111,7 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
         innerCircleX = centerX
         innerCircleY = centerY
         angle = 0F
-        Log.w("resetJoystick", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
+        Log.w("resetJoystick", " centerX: ${centerX}, centerY: ${centerY}, angle: ${angle}")
         invalidate()
     }
 }

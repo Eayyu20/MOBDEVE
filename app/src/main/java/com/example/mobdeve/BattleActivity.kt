@@ -1,27 +1,17 @@
 package com.example.mobdeve
 
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.Matrix
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
-import android.view.SurfaceHolder
-import android.view.SurfaceView
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
-import androidx.core.content.res.ResourcesCompat
-import java.lang.Exception
-import com.example.mobdeve.Joystick
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -48,9 +38,6 @@ class BattleActivity : AppCompatActivity() {
     var p2ABool: Boolean = false
     var p2BBool: Boolean = false
 
-    var arena_height : Int = 0
-    var arena_width : Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.battle_screen)
@@ -63,6 +50,7 @@ class BattleActivity : AppCompatActivity() {
 
         // Initialize map
         arena = findViewById<Arena>(R.id.arena)
+        battle = Battle(p1, p2)
 
         player1AButton = findViewById<ImageView>(R.id.player1AButton)
         player1BButton = findViewById<ImageView>(R.id.player1BButton)
@@ -72,57 +60,32 @@ class BattleActivity : AppCompatActivity() {
         player1Joystick = findViewById<Joystick>(R.id.player1joystick)
         player2Joystick = findViewById<Joystick>(R.id.player2joystick)
 
-        arena.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                arena_height = arena.height
-                arena_width = arena.width
-
-                p1.posX = (arena_width / 2F).toInt()
-                p1.posY = (arena_height / 4F).toInt()
-                p2.posX = (arena_width / 2F).toInt()
-                p2.posY = (3 * arena_height / 4F).toInt()
-
-                // Remove the listener to avoid it being called multiple times
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    arena.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                } else {
-                    arena.viewTreeObserver.removeGlobalOnLayoutListener(this)
-                }
-
-                battle = Battle(p1, p2, arena_height, arena_width)
-
-                runLoopOnThread()
-            }
-        })
+        runLoopOnThread()
     }
 
     fun runLoopOnThread() {
         GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
             while (true) { // infinite loop
-                p1JsAngle = player1Joystick.angle
-                p2JsAngle = player2Joystick.angle
-
                 battle.update(p1JsAngle, p2JsAngle, p1ABool, p1BBool, p2ABool, p2BBool)
-                println("Running loop on thread: ${Thread.currentThread().name}")
                 delay(1000) // non-blocking delay for 1 second (default time unit is ms)
-
-                var bitmap = update()
-
-                Log.w("BITMAP", bitmap.toString())
-
-                arena.updateBitmap(bitmap)
+                arena.updateBitmap(update())
             }
         }
     }
 
     fun update() : Bitmap {
-        var bitmap: Bitmap = Bitmap.createBitmap(arena_width, arena_height, Bitmap.Config.ARGB_8888)
+        var bitmap: Bitmap = Bitmap.createBitmap(1300,1148, Bitmap.Config.ARGB_8888)
         var canvas: Canvas = Canvas(bitmap)
 
-        val p1_current: Bitmap = p1.spriteSheet.getSprite(p1.currentAction,p1.actionFrame)
+        var p1_current: Bitmap = p1.spriteSheet.getSprite(p1.currentAction,p1.actionFrame)
+        p1_current = flipY(p1_current)
+        p1_current = rotate(p1_current, 90F)
+        if (p1.angle <= 0) p1_current = flipBitmap(p1_current)
         canvas.drawBitmap(p1_current, (p1.posX).toFloat(), (p1.posY).toFloat(), null)
 
-        val p2_current: Bitmap = p2.spriteSheet.getSprite(p2.currentAction,p2.actionFrame)
+        var p2_current: Bitmap = p2.spriteSheet.getSprite(p2.currentAction,p2.actionFrame)
+        p2_current = rotate(p2_current, 270F)
+        if (p2.angle < 0) p2_current = flipBitmap(p2_current)
         canvas.drawBitmap(p2_current, (p2.posX).toFloat(), (p2.posY).toFloat(), null)
 
         // check if gameOver
@@ -131,6 +94,24 @@ class BattleActivity : AppCompatActivity() {
         }
 
         return bitmap
+    }
+
+    fun flipBitmap(source: Bitmap): Bitmap {
+        val matrix = Matrix()
+        matrix.postScale(-1F, 1F, source.getWidth() / 2f, source.getHeight() / 2f)
+        return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+    }
+
+    fun rotate(source: Bitmap, rotate: Float): Bitmap {
+        val matrix = Matrix()
+        matrix.postRotate(90F)
+        return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+    }
+
+    fun flipY(source: Bitmap): Bitmap {
+        val matrix = Matrix()
+        matrix.postScale(1F, -1F, source.getWidth() / 2f, source.getHeight() / 2f)
+        return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
     }
 
     fun end(v: View) {

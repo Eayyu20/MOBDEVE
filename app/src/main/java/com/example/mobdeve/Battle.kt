@@ -4,15 +4,14 @@ import android.util.Log
 import java.lang.Math.cos
 import java.lang.Math.sin
 
-class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SIZE_Y: Int) {
+class Battle(var p1: Player, var p2: Player) {
     var gameOver: Boolean = false
     init {
-        Log.w("Arena", "Height: " + STAGE_SIZE_Y.toString() + " Width: " + STAGE_SIZE_X.toString())
-        this.p1.posX = (this.STAGE_SIZE_X / 2) - 5 // 5 here assumes that the hitbox is centered and half the sprite is 5 units
-        this.p1.posY = this.STAGE_SIZE_Y - 50 // 50 units away from the edge
+        this.p1.posX = (1300 / 4).toInt()
+        this.p1.posY = (1148 / 2).toInt()
 
-        this.p2.posX = this.STAGE_SIZE_X - this.p1.posX // should be mirror opposite of p1
-        this.p2.posY = this.STAGE_SIZE_Y - this.p1.posY // should be mirror opposite of p1
+        this.p2.posX = (1300 * 3 / 4).toInt()
+        this.p2.posY = (1148 / 2).toInt()
 
         this.p1.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
         this.p2.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
@@ -46,11 +45,8 @@ class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SI
         }
 
         // movement = speed * direction
-        p1.posX += (p1.speed * cos(p1Joystick.toDouble())).toInt()
-        p1.posY += (p1.speed * sin(p1Joystick.toDouble())).toInt()
-
-        p2.posX += (p2.speed * cos(p2Joystick.toDouble())).toInt()
-        p2.posY += (p2.speed * sin(p2Joystick.toDouble())).toInt()
+        p1.move((p1.speed * cos(p1Joystick.toDouble())).toInt(),(p1.speed * sin(p1Joystick.toDouble())).toInt())
+        p2.move((p2.speed * cos(p2Joystick.toDouble())).toInt(), (p2.speed * sin(p2Joystick.toDouble())).toInt())
 
         // take damage
         if (p1.currentAction == 5) {
@@ -204,6 +200,8 @@ class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SI
             // set p2 current frame to end of hitFC
             p2.actionFrame = p2.special_attack.hitFC + 1
         }
+        Log.w("P1", "x: " + p1.posX.toString() +  " y: " + p1.posY.toString() + " action frame: " + p1.actionFrame.toString() + " current action: " + p1.currentAction.toString())
+        Log.w("P2", "x: " + p2.posX.toString() +  " y: " + p2.posY.toString() + " action frame: " + p2.actionFrame.toString() + " current action: " + p2.currentAction.toString())
     }
 
     fun ifCollide(def: Array<IntArray>, att: Array<IntArray>): Boolean {

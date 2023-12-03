@@ -2,6 +2,7 @@ package com.example.mobdeve
 
 import android.content.Context
 import android.graphics.Rect
+import android.util.Log
 
 class Player(context: Context, charId: Int) {
     // 1 - sword, 2 - spear, 3 - shield
@@ -70,7 +71,11 @@ class Player(context: Context, charId: Int) {
     }
 
     fun move(x_displacement: Int, y_displacement: Int) {
-        this.posX += x_displacement
-        this.posY += y_displacement
+        if (posX + x_displacement < 0) posX = 0
+        else if (posX + x_displacement > 1100) posX = 1100
+        else posX += x_displacement
+        if (posY + y_displacement < 0) posY = 0
+        else if (posY + y_displacement > 1100) posY = 1100
+        else posY += y_displacement
     }
 }

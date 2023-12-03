@@ -53,34 +53,23 @@ class BattleActivity : AppCompatActivity() {
         // Initialize map
         arena = findViewById<SurfaceView>(R.id.arena)
 
-        arena.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                arena_height = arena.width
-                arena_width = arena.height
+        arena_height = arena.width
+        arena_width = arena.height
 
-                // Remove the listener to avoid it being called multiple times
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    arena.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                } else {
-                    arena.viewTreeObserver.removeGlobalOnLayoutListener(this)
-                }
+        Log.w("Arena", arena.toString())
+        Log.w("BA", "ah: " + arena_height.toString() + " aw: " + arena_width.toString())
 
-                Log.w("Arena", arena.toString())
-                Log.w("BA", "ah: " + arena_height.toString() + " aw: " + arena_width.toString())
+        battle = Battle(p1, p2, arena_height, arena_width)
 
-                battle = Battle(p1, p2, arena_height, arena_width)
-            }
-        })
+//        player1AButton = findViewById<ImageView>(R.id.player1AButton)
+//        player1BButton = findViewById<ImageView>(R.id.player1BButton)
+//        player2AButton = findViewById<ImageView>(R.id.player2AButton)
+//        player2BButton = findViewById<ImageView>(R.id.player2BButton)
+//
+//        player1Joystick = findViewById<Joystick>(R.id.player1joystick)
+//        player2Joystick = findViewById<Joystick>(R.id.player2joystick)
 
-        player1AButton = findViewById<ImageView>(R.id.player1AButton)
-        player1BButton = findViewById<ImageView>(R.id.player1BButton)
-        player2AButton = findViewById<ImageView>(R.id.player2AButton)
-        player2BButton = findViewById<ImageView>(R.id.player2BButton)
-
-        player1Joystick = findViewById<Joystick>(R.id.player1joystick)
-        player2Joystick = findViewById<Joystick>(R.id.player2joystick)
-
-        Log.w("p1js", player1Joystick.toString() + " h: " + player1Joystick.height.toString() + " w: " + player1Joystick.width.toString())
+//        Log.w("p1js", player1Joystick.toString() + " h: " + player1Joystick.height.toString() + " w: " + player1Joystick.width.toString())
     }
 
     fun end(v: View) {

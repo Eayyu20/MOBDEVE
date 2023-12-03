@@ -1,12 +1,9 @@
 package com.example.mobdeve
 
+import com.example.mobdeve.R
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.os.Build.VERSION_CODES.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -14,13 +11,12 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
-import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import java.lang.Exception
 import com.example.mobdeve.Joystick
 
-class BattleActivity : AppCompatActivity(), Joystick.JoystickListener {
+class BattleActivity : AppCompatActivity() {
     lateinit var battle: Battle
     lateinit var arena: SurfaceView
 
@@ -38,7 +34,7 @@ class BattleActivity : AppCompatActivity(), Joystick.JoystickListener {
     lateinit var player1BButton: ImageView
     lateinit var player2AButton: ImageView
     lateinit var player2BButton: ImageView
-    lateinit var player1Joystick : Joystick
+    lateinit var player1Joystick: Joystick
     lateinit var player2Joystick: Joystick
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,17 +47,10 @@ class BattleActivity : AppCompatActivity(), Joystick.JoystickListener {
         this.p1 = Player(this, Integer.parseInt(p1CharId))
         this.p2 = Player(this, Integer.parseInt(p2CharId))
 
-
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
-        val displayMetrics = DisplayMetrics()
-        val height = displayMetrics.heightPixels
-        val width = displayMetrics.widthPixels
 
         val arena_height = 0
         val arena_width = 0
-
-        this.battle = Battle(p1, p2, arena_height, arena_width)
 
         // Initialize map
         this.arena = findViewById<SurfaceView>(R.id.arena)
@@ -74,23 +63,7 @@ class BattleActivity : AppCompatActivity(), Joystick.JoystickListener {
         this.player1Joystick = findViewById<Joystick>(R.id.player1joystick)
         this.player2Joystick = findViewById<Joystick>(R.id.player2joystick)
 
-        player1Joystick.setJoystickListener(this)
-        player2Joystick.setJoystickListener(this)
-
-        override fun onJoystickMoved(xPercent: Float, yPercent: Float) {
-            TODO("Not yet implemented")
-        }
-
-        override fun onAngleChanged(joystick: Joystick, angle: Float) {
-            val id = joystick.getJoystickId()
-
-            if(id == 1){
-                player1MovementAngle = angle.toInt()
-            }else{
-                player2MovementAngle = angle.toInt()
-            }
-        }
-
+        this.battle = Battle(p1, p2, arena_height, arena_width)
     }
 
     fun end(v: View) {

@@ -3,6 +3,7 @@ package com.example.mobdeve
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -14,8 +15,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class CharacterSelectActivity : AppCompatActivity() {
-    private var p1CharSelect: Int = -1
-    private var p2CharSelect: Int = -1
+    private var p1CharSelect: Int = 1
+    private var p2CharSelect: Int = 1
 
     private var p1LockStatus: Int = -1
     private var p2LockStatus: Int = -1
@@ -34,43 +35,88 @@ class CharacterSelectActivity : AppCompatActivity() {
         lateinit var classname: String
 
         // if player is player 1
-        if (v.id === R.id.ivShieldP1) {
+        if ((v.id === R.id.ivShieldP1) && (p1LockStatus == -1)) {
             this.p1CharSelect = 3
+
+            // reset colors and highlight selected
+            findViewById<ImageView>(R.id.ivSpearP1).setBackgroundColor(Color.parseColor("#9DC5F6"))
+            findViewById<ImageView>(R.id.ivSwordP1).setBackgroundColor(Color.parseColor("#9DC5F6"))
+            v.setBackgroundColor(Color.parseColor("#2187ab"))
+
+            // show character
             charaView = findViewById<ImageView>(R.id.ivCharacviewP1)
+            charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()))
             classname = "Shield"
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()));
 
         }
-        else if (v.id === R.id.ivSpearP1) {
+        else if ((v.id === R.id.ivSpearP1) && (p1LockStatus == -1)) {
             this.p1CharSelect = 2
+
+            // reset colors and highlight selected
+            findViewById<ImageView>(R.id.ivShieldP1).setBackgroundColor(Color.parseColor("#9DC5F6"))
+            findViewById<ImageView>(R.id.ivSwordP1).setBackgroundColor(Color.parseColor("#9DC5F6"))
+            v.setBackgroundColor(Color.parseColor("#2187ab"))
+
+            // show character
             charaView = findViewById<ImageView>(R.id.ivCharacviewP1)
+            charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()))
             classname = "Spear"
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()));
+
         }
-        else if (v.id === R.id.ivSwordP1) {
+        else if ((v.id === R.id.ivSwordP1) && (p1LockStatus == -1)){
             this.p1CharSelect = 1
+
+            // reset colors and highlight selected
+            findViewById<ImageView>(R.id.ivShieldP1).setBackgroundColor(Color.parseColor("#9DC5F6"))
+            findViewById<ImageView>(R.id.ivSpearP1).setBackgroundColor(Color.parseColor("#9DC5F6"))
+            v.setBackgroundColor(Color.parseColor("#2187ab"))
+
+            // show character
             charaView = findViewById<ImageView>(R.id.ivCharacviewP1)
+            charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()))
             classname = "Sword"
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()));
         }
         // if player is player 2
-        else if (v.id === R.id.ivShieldP2) {
+        else if ((v.id === R.id.ivShieldP2) && (p2LockStatus == -1)){
             this.p2CharSelect = 3
+
+            // reset colors and highlight selected
+            findViewById<ImageView>(R.id.ivSpearP2).setBackgroundColor(Color.parseColor("#D39898"))
+            findViewById<ImageView>(R.id.ivSwordP2).setBackgroundColor(Color.parseColor("#D39898"))
+            v.setBackgroundColor(Color.parseColor("#943838"))
+
+            // show character
             charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
+            charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()))
             classname = "Shield"
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()));
         }
-        else if (v.id === R.id.ivSpearP2) {
+        else if ((v.id === R.id.ivSpearP2) && (p2LockStatus == -1)) {
             this.p2CharSelect = 2
+
+            // reset colors and highlight selected
+            findViewById<ImageView>(R.id.ivShieldP2).setBackgroundColor(Color.parseColor("#D39898"))
+            findViewById<ImageView>(R.id.ivSwordP2).setBackgroundColor(Color.parseColor("#D39898"))
+            v.setBackgroundColor(Color.parseColor("#943838"))
+
+            // show character
             charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
+            charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()))
             classname = "Spear"
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()));
+
         }
-        else if (v.id === R.id.ivSwordP2) {
+        else if ((v.id === R.id.ivSwordP2) && (p2LockStatus == -1)) {
             this.p2CharSelect = 1
+
+            // reset colors and highlight selected
+            findViewById<ImageView>(R.id.ivShieldP2).setBackgroundColor(Color.parseColor("#D39898"))
+            findViewById<ImageView>(R.id.ivSpearP2).setBackgroundColor(Color.parseColor("#D39898"))
+            v.setBackgroundColor(Color.parseColor("#943838"))
+
+            // show character
             charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
+            charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()))
             classname = "Sword"
-            charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()));
+
         }
 
 //        animateIdle(classname, charaView)
@@ -110,10 +156,11 @@ class CharacterSelectActivity : AppCompatActivity() {
             classname = findViewById<TextView>(R.id.tvCharacclassP1).text.toString();
             Log.e("TAG", classname + " " + charaView)
         }
-//        else if (v.id === R.id.ivCharacviewP2) {
-//            charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
-//            classname = findViewById<TextView>(R.id.tvCharacclassP2).text.toString();
-//        }
+        else if (v.id === R.id.ivCharacviewP2) {
+            charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
+            classname = findViewById<TextView>(R.id.tvCharacclassP2).text.toString();
+            Log.e("TAG", classname + " " + charaView)
+        }
 
         animateAttack(classname, charaView)
     }

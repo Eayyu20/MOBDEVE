@@ -147,7 +147,6 @@
                         android:layout_weight="0"
                         android:fontFamily="sans-serif-black"
                         android:rotation="180"
-                        android:text="Sword"
                         android:textSize="24sp" />
 
 
@@ -220,7 +219,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:fontFamily="sans-serif-black"
-                        android:text="Sword"
                         android:textSize="24sp" />
 
                     <TextView

@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <SurfaceView
+    <com.example.mobdeve.Arena
         android:id="@+id/arena"
         android:layout_width="match_parent"
         android:layout_height="328dp"

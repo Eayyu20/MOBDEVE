@@ -12,7 +12,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 
 class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs), SurfaceHolder.Callback {
-
+    private lateinit var canvas: Canvas
     init{
         holder.addCallback(this)
     }
@@ -22,7 +22,8 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-
+        canvas = holder.lockCanvas()
+        holder.unlockCanvasAndPost(canvas)
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
@@ -33,9 +34,12 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
         // Handle surface destruction if nee
     }
 
-//    fun renderCanvas(bitmap: Bitmap) {
-//        val surfaceCanvas = holder.lockCanvas()
-//        surfaceCanvas.drawBitmap(bitmap, 0f, 0f, null)
-//        holder.unlockCanvasAndPost(surfaceCanvas)
-//    }
+    fun renderCanvas(bitmap: Bitmap) {
+        Log.e("Surface Canvas", "Called Render")
+        var surfaceCanvas = holder.lockCanvas() // surfaceCanvas is a null object
+        if (surfaceCanvas == null) return
+        Log.e("Surface Canvas", "Not NUll")
+        surfaceCanvas.drawBitmap(bitmap, 0f, 0f, null)
+        holder.unlockCanvasAndPost(surfaceCanvas)
+    }
 }

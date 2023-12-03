@@ -25,7 +25,7 @@ import com.example.mobdeve.Joystick
 
 class BattleActivity : AppCompatActivity() {
     lateinit var battle: Battle
-    lateinit var arena: SurfaceView
+    lateinit var arena: Arena
 
     lateinit var p1: Player
     lateinit var p2: Player
@@ -51,7 +51,7 @@ class BattleActivity : AppCompatActivity() {
         p2 = Player(this, Integer.parseInt(p2CharId))
 
         // Initialize map
-        arena = findViewById<SurfaceView>(R.id.arena)
+        arena = findViewById<Arena>(R.id.arena)
 
         arena.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -69,6 +69,7 @@ class BattleActivity : AppCompatActivity() {
                 Log.w("BA", "ah: " + arena_height.toString() + " aw: " + arena_width.toString())
 
                 battle = Battle(p1, p2, arena_height, arena_width)
+                arena.renderCanvas(update())
             }
         })
 
@@ -81,10 +82,12 @@ class BattleActivity : AppCompatActivity() {
         player2Joystick = findViewById<Joystick>(R.id.player2joystick)
 
         Log.w("p1js", player1Joystick.toString() + " h: " + player1Joystick.height.toString() + " w: " + player1Joystick.width.toString())
-
     }
 
-    fun update(canvas: Canvas) : Canvas {
+    fun update() : Bitmap {
+        Log.w("Bitmap", "ah: " + arena_height.toString() + " aw: " + arena_width.toString())
+        var bitmap: Bitmap = Bitmap.createBitmap(arena_width, arena_height, Bitmap.Config.ARGB_8888)
+        var canvas: Canvas = Canvas(bitmap)
         val p1_current : Sprite = p1.spriteSheet.getSprite(p1.currentAction,p1.actionFrame)
         val p2_current : Sprite = p2.spriteSheet.getSprite(p2.currentAction,p2.actionFrame)
         p1_current.draw(canvas, p1.posX, p1.posY)
@@ -95,7 +98,7 @@ class BattleActivity : AppCompatActivity() {
             // draw game over screen
         }
 
-        return canvas
+        return bitmap
     }
 
     fun end(v: View) {

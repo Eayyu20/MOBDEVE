@@ -1,7 +1,10 @@
 package com.example.mobdeve
 
+import android.util.Log
+
 class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SIZE_Y: Int) {
     init {
+        Log.w("Arena", "Height: " + STAGE_SIZE_Y.toString() + " Width: " + STAGE_SIZE_X.toString())
         this.p1.posX = (this.STAGE_SIZE_X / 2) - 5 // 5 here assumes that the hitbox is centered and half the sprite is 5 units
         this.p1.posY = this.STAGE_SIZE_Y - 50 // 50 units away from the edge
 

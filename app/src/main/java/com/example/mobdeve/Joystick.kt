@@ -38,13 +38,25 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
 
     init {
         setWillNotDraw(false)
-        alpha = 0F
+//        alpha = 0F
         setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(view: View, event: MotionEvent): Boolean {
                 if (event.action == MotionEvent.ACTION_DOWN || event.action == MotionEvent.ACTION_MOVE) {
                     innerCircleX = event.x
                     innerCircleY = event.y
                     angle = Math.toDegrees(atan2((event.y - centerY).toDouble(), (event.x - centerX).toDouble())).toFloat()
+                    if (innerCircleX > 350) {
+                        innerCircleX = 350F
+                    }
+                    else if (innerCircleX < -350) {
+                        innerCircleX = -350F
+                    }
+                    if (innerCircleY > 350) {
+                        innerCircleY = 350F
+                    }
+                    else if (innerCircleY < -350) {
+                        innerCircleY = -350F
+                    }
                     invalidate()
                     return true
                 }
@@ -63,9 +75,8 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
             canvas.drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
             canvas.drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)
             holder.unlockCanvasAndPost(canvas)
-            Log.w(this.javaClass.name, "X: " + innerCircleX.toString() + " Y: " + innerCircleY.toString() )
+            Log.w(this.javaClass.name, "X: " + innerCircleX.toString() + " Y: " + innerCircleY.toString())
         }
-
     }
 
     private fun resetJoystick() {

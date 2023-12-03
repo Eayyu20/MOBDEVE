@@ -99,6 +99,23 @@ class BattleActivity : AppCompatActivity() {
     fun runLoopOnThread() {
         GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
             while (true) { // infinite loop
+
+                player1AButton.setOnClickListener {
+                    p1ABool = true
+                }
+
+                player1BButton.setOnClickListener {
+                    p1BBool = true
+                }
+
+                player2AButton.setOnClickListener {
+                    p2ABool = true
+                }
+
+                player2BButton.setOnClickListener {
+                    p2BBool = true
+                }
+
                 p1JsAngle = player1Joystick.angle
                 p2JsAngle = player2Joystick.angle
 
@@ -106,11 +123,12 @@ class BattleActivity : AppCompatActivity() {
                 println("Running loop on thread: ${Thread.currentThread().name}")
                 delay(1000) // non-blocking delay for 1 second (default time unit is ms)
 
-                var bitmap = update()
+                p1ABool = false
+                p1BBool = false
+                p2ABool = false
+                p2BBool = false
 
-                Log.w("BITMAP", bitmap.toString())
-
-                arena.updateBitmap(bitmap)
+                arena.updateBitmap(update())
             }
         }
     }

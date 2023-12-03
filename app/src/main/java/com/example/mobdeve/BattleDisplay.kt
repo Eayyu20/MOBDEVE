@@ -10,7 +10,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 
 
-class BattleDisplay (var battle: Battle){
+class BattleDisplay (var battle: Battle) {
     var p1 = battle.p1
     var p2 = battle.p2
 
@@ -23,5 +23,7 @@ class BattleDisplay (var battle: Battle){
     fun update(canvas: Canvas) {
         // draw p1 - check for direction, action type, frame count, position
         // draw p2 - check for direction, action type, frame count, position
+        // check if gameOver
+        // draw game over screen
     }
 }

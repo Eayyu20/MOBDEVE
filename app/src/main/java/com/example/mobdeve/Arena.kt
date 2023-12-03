@@ -13,7 +13,9 @@ import android.view.SurfaceView
 
 class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs), SurfaceHolder.Callback {
     private lateinit var canvas: Canvas
+    private lateinit var holder: SurfaceHolder
     init{
+        holder = getHolder()
         holder.addCallback(this)
     }
 
@@ -35,11 +37,12 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
     }
 
     fun renderCanvas(bitmap: Bitmap) {
-        Log.e("Surface Canvas", "Called Render")
-        var surfaceCanvas = holder.lockCanvas() // surfaceCanvas is a null object
-        if (surfaceCanvas == null) return
-        Log.e("Surface Canvas", "Not NUll")
-        surfaceCanvas.drawBitmap(bitmap, 0f, 0f, null)
-        holder.unlockCanvasAndPost(surfaceCanvas)
+        if (::canvas.isInitialized) {
+            canvas = holder.lockCanvas()
+            if (canvas != null) {
+                canvas.drawBitmap(bitmap, 0f, 0f, null)
+                holder.unlockCanvasAndPost(canvas)
+            }
+        }
     }
 }

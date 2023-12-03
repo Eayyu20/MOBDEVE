@@ -22,6 +22,10 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.res.ResourcesCompat
 import java.lang.Exception
 import com.example.mobdeve.Joystick
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class BattleActivity : AppCompatActivity() {
     lateinit var battle: Battle
@@ -36,6 +40,13 @@ class BattleActivity : AppCompatActivity() {
     lateinit var player2BButton: ImageView
     lateinit var player1Joystick : Joystick
     lateinit var player2Joystick: Joystick
+
+    var p1JsAngle: Float = 0F
+    var p1ABool: Boolean = false
+    var p1BBool: Boolean = false
+    var p2JsAngle: Float = 0F
+    var p2ABool: Boolean = false
+    var p2BBool: Boolean = false
 
     var arena_height : Int = 0
     var arena_width : Int = 0
@@ -53,26 +64,6 @@ class BattleActivity : AppCompatActivity() {
         // Initialize map
         arena = findViewById<Arena>(R.id.arena)
 
-        arena.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                arena_height = arena.width
-                arena_width = arena.height
-
-                // Remove the listener to avoid it being called multiple times
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    arena.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                } else {
-                    arena.viewTreeObserver.removeGlobalOnLayoutListener(this)
-                }
-
-                Log.w("Arena", arena.toString())
-                Log.w("BA", "ah: " + arena_height.toString() + " aw: " + arena_width.toString())
-
-                battle = Battle(p1, p2, arena_height, arena_width)
-                arena.renderCanvas(update())
-            }
-        })
-
         player1AButton = findViewById<ImageView>(R.id.player1AButton)
         player1BButton = findViewById<ImageView>(R.id.player1BButton)
         player2AButton = findViewById<ImageView>(R.id.player2AButton)
@@ -81,11 +72,45 @@ class BattleActivity : AppCompatActivity() {
         player1Joystick = findViewById<Joystick>(R.id.player1joystick)
         player2Joystick = findViewById<Joystick>(R.id.player2joystick)
 
-        Log.w("p1js", player1Joystick.toString() + " h: " + player1Joystick.height.toString() + " w: " + player1Joystick.width.toString())
+        arena.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                arena_height = arena.width
+                arena_width = arena.height
+
+                p1.posX = (arena_width / 2F).toInt()
+                p1.posY = (arena_height / 4F).toInt()
+                p2.posX = (arena_width / 2F).toInt()
+                p2.posY = (3 * arena_height / 4F).toInt()
+
+                // Remove the listener to avoid it being called multiple times
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    arena.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                } else {
+                    arena.viewTreeObserver.removeGlobalOnLayoutListener(this)
+                }
+
+                battle = Battle(p1, p2, arena_height, arena_width)
+
+                runLoopOnThread()
+            }
+        })
+    }
+
+    fun runLoopOnThread() {
+        GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
+            while (true) { // infinite loop
+                p1JsAngle = player1Joystick.angle
+                p2JsAngle = player2Joystick.angle
+
+                battle.update(p1JsAngle, p2JsAngle, p1ABool, p1BBool, p2ABool, p2BBool)
+                println("Running loop on thread: ${Thread.currentThread().name}")
+                delay(1000) // non-blocking delay for 1 second (default time unit is ms)
+                arena.renderCanvas(update())
+            }
+        }
     }
 
     fun update() : Bitmap {
-        Log.w("Bitmap", "ah: " + arena_height.toString() + " aw: " + arena_width.toString())
         var bitmap: Bitmap = Bitmap.createBitmap(arena_width, arena_height, Bitmap.Config.ARGB_8888)
         var canvas: Canvas = Canvas(bitmap)
         val p1_current : Sprite = p1.spriteSheet.getSprite(p1.currentAction,p1.actionFrame)

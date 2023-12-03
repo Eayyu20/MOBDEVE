@@ -20,7 +20,7 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
     private var innerCircleRadius: Float = 0F
     private var innerCircleX: Float = 0F
     private var innerCircleY: Float = 0F
-    private var angle: Float = 0F
+    var angle: Float = 0F
 
     init {
         holder.addCallback(this)

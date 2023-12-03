@@ -5,13 +5,14 @@
     android:id="@+id/clBG"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D1B8A8"
+    android:animationCache="false"
+    android:background="#431070"
     tools:context=".CharacterSelectActivity">
 
     <LinearLayout
         android:id="@+id/llCharacSelect"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,32 +24,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#D6C4C4"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btP2Lock"
+            <TextView
+                android:id="@+id/tvInstructP2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="100sp"
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
                 android:layout_weight="1"
-                android:backgroundTint="#D6C4C4"
-                android:fontFamily="monospace"
-                android:padding="1sp"
+                android:fontFamily="sans-serif-medium"
                 android:rotation="180"
-                android:text="LOCK"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:onClick="onLock"
-                app:cornerRadius="0sp"
-                app:strokeColor="@android:color/holo_red_dark"
-                app:strokeWidth="4sp"
-                tools:ignore="HardcodedText" />
+                android:text="Choose your class and lock once you're ready!"
+                android:textAlignment="center" />
 
             <LinearLayout
                 android:id="@+id/llP2Charac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10sp"
+                android:layout_weight="1"
                 android:gravity="bottom">
 
                 <ImageView
@@ -98,20 +94,169 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llCharacviewP2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/llCharacDeetP2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btP2Lock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:backgroundTint="#D6C4C4"
+                        android:fontFamily="monospace"
+                        android:onClick="onLock"
+                        android:paddingLeft="30sp"
+                        android:paddingRight="30sp"
+                        android:rotation="180"
+                        android:text="LOCK"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="0sp"
+                        app:strokeColor="@android:color/holo_red_dark"
+                        app:strokeWidth="4sp"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/tvCharacdescP2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:rotation="180"
+                        android:text="A strong fighter that harnesses the power of the sun to defeat his foes.\n\n[A] Normal Attack: Performs his ritual to deal 9 damage in a cone in front of him.\n\n[B] Special Attack: Releases a powerful slash in front of him, dealing 15 damage to foes in front of him." />
+
+
+                    <TextView
+                        android:id="@+id/tvCharacclassP2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10sp"
+                        android:layout_weight="0"
+                        android:fontFamily="sans-serif-black"
+                        android:rotation="180"
+                        android:text="Sword"
+                        android:textSize="24sp" />
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivCharacviewP2"
+                    android:layout_width="192sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:minWidth="250sp"
+                    android:rotation="180"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:src="@tools:sample/avatars"
+                    app:srcCompat="@drawable/standing_1"
+                    tools:srcCompat="@drawable/standing_1" />
+
+            </LinearLayout>
+
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10sp"
+            android:layout_weight="0" />
 
         <LinearLayout
             android:id="@+id/llP1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#C4CDD6"
+            android:backgroundTint="#C4CDD6"
+            android:gravity="bottom"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llCharacviewP1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ivCharacviewP1"
+                    android:layout_width="192sp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:minWidth="250sp"
+                    android:onClick="Attack"
+                    android:scaleX="0.75"
+                    android:scaleY="0.75"
+                    android:src="@drawable/standing_1"
+                    app:srcCompat="@drawable/standing_1"
+                    tools:srcCompat="@drawable/standing_1" />
+
+                <LinearLayout
+                    android:id="@+id/llCharacDeetP1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10"
+                    android:orientation="vertical"
+                    android:paddingTop="10sp">
+
+                    <TextView
+                        android:id="@+id/tvCharacclassP1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Sword"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvCharacdescP1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="A strong fighter that harnesses the power of the sun to defeat his foes.\n\n[A] Normal Attack: Performs his ritual to deal 9 damage in a cone in front of him.\n\n[B] Special Attack: Releases a powerful slash in front of him, dealing 15 damage to foes in front of him." />
+
+                    <Button
+                        android:id="@+id/btP1Lock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="0"
+                        android:backgroundTint="#C4CDD6"
+                        android:fontFamily="monospace"
+                        android:onClick="onLock"
+                        android:paddingLeft="30sp"
+                        android:paddingRight="30sp"
+                        android:text="LOCK"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="0sp"
+                        app:strokeColor="@android:color/holo_blue_dark"
+                        app:strokeWidth="4sp"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llP1Charac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top">
+                android:layout_marginTop="10sp"
+                android:layout_weight="1"
+                android:gravity="bottom">
 
                 <ImageView
                     android:id="@+id/ivSwordP1"
@@ -119,6 +264,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#9DC5F6"
+                    android:baselineAlignBottom="false"
                     android:contentDescription="P1 Sword"
                     android:onClick="onCharSelect"
                     android:src="@drawable/standing_1"
@@ -154,39 +300,19 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btP1Lock"
+            <TextView
+                android:id="@+id/tvInstructP1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100sp"
-                android:layout_weight="0"
-                android:backgroundTint="#C4CDD6"
-                android:fontFamily="monospace"
-                android:text="LOCK"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:onClick="onLock"
-                app:cornerRadius="0sp"
-                app:strokeColor="@android:color/holo_blue_dark"
-                app:strokeWidth="4sp"
-                tools:ignore="HardcodedText" />
+                android:layout_marginTop="5sp"
+                android:layout_marginBottom="5sp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="Choose your class and lock once you're ready!"
+                android:textAlignment="center" />
+
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10sp"
-        android:text="Go Back"
-        android:onClick="goBack"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/llCharacSelect"
-        app:layout_constraintVertical_bias="0.837" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

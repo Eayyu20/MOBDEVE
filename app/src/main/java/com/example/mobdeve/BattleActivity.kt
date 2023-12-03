@@ -84,6 +84,20 @@ class BattleActivity : AppCompatActivity() {
 
     }
 
+    fun update(canvas: Canvas) : Canvas {
+        val p1_current : Sprite = p1.spriteSheet.getSprite(p1.currentAction,p1.actionFrame)
+        val p2_current : Sprite = p2.spriteSheet.getSprite(p2.currentAction,p2.actionFrame)
+        p1_current.draw(canvas, p1.posX, p1.posY)
+        p2_current.draw(canvas, p2.posX, p2.posY)
+
+        // check if gameOver
+        if (p1.hp <= 0 || p2.hp <= 0) {
+            // draw game over screen
+        }
+
+        return canvas
+    }
+
     fun end(v: View) {
         val intent = Intent(this, TitleActivity::class.java)
         startActivity(intent)

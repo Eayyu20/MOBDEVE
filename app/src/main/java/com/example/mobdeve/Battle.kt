@@ -22,6 +22,9 @@ class Battle(var p1: Player, var p2: Player, val STAGE_SIZE_X: Int, val STAGE_SI
     }
 
     fun update(p1Joystick: Float, p2Joystick: Float, p1normal: Boolean, p1special: Boolean, p2normal: Boolean, p2special: Boolean) {
+        p1.angle = p1Joystick
+        p2.angle = p2Joystick
+
         // handle death
         if (p1.hp <= 0) {
             if (p1.currentAction != 4) {

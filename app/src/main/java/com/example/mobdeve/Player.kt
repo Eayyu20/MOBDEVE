@@ -10,6 +10,7 @@ class Player(context: Context, charId: Int) {
     var posX: Int = 0
     var posY: Int = 0
     var speed: Int = 0
+    var angle : Float = 0F
     var currentAction : Int = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death, 5 - take damage
     var actionFrame: Int = 0
     lateinit var normal_attack : Attack

@@ -15,11 +15,11 @@ import kotlin.math.atan2
 class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, attrs), SurfaceHolder.Callback{
 
     private lateinit var canvas: Canvas
-    private var centerX: Float = (width / 2).toFloat()
-    private var centerY: Float = (height / 2).toFloat()
-    private var innerCircleRadius: Float = 100F
-    private var innerCircleX: Float = (width / 2).toFloat()
-    private var innerCircleY: Float = (height / 2).toFloat()
+    private var centerX: Float = 0F
+    private var centerY: Float = 0F
+    private var innerCircleRadius: Float = 0F
+    private var innerCircleX: Float = 0F
+    private var innerCircleY: Float = 0F
     private var angle: Float = 0F
 
     init {
@@ -51,6 +51,7 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
                 }
                 else if (event.action == MotionEvent.ACTION_UP){
                     resetJoystick()
+                    Log.w("resetJoystick", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
                 }
                 view.performClick()
                 return false
@@ -60,10 +61,21 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        Log.w("onDraw", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
         drawOnCanvas(holder)
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
+
+        centerX = width / 2F
+        centerY = height / 2F
+        innerCircleRadius = 64F
+        innerCircleX = width / 2F
+        innerCircleY = height / 2F
+        angle = 0F
+
+        Log.w("surfaceCreated", " width: ${width}, height: ${height}")
+        Log.w("surfaceCreated", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
         drawOnCanvas(holder)
     }
 
@@ -87,6 +99,9 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
             style = Paint.Style.FILL
         }
 
+        Log.w("drawnOnCanvas", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
+        Log.w("drawnOnCanvas", " width: ${width}, height: ${height}")
+
         canvas.drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
         canvas.drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)
 
@@ -94,9 +109,10 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
     }
 
     private fun resetJoystick() {
-        innerCircleX = 0F
-        innerCircleY = 0F
+        innerCircleX = centerX
+        innerCircleY = centerY
         angle = 0F
+        Log.w("resetJoystick", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
         invalidate()
     }
 }

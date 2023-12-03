@@ -11,19 +11,35 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import java.lang.Exception
+import com.example.mobdeve.Joystick
 
-class BattleActivity : AppCompatActivity() {
+class BattleActivity : AppCompatActivity(), Joystick.JoystickListener {
     lateinit var battle: Battle
     lateinit var arena: SurfaceView
-    lateinit var player1Joystick : Joystick
-    lateinit var player2Joystick: Joystick
+
+    var isAPressedPlayer1: Boolean = false
+    var isBPressedPlayer1: Boolean = false
+    var isAPressedPlayer2: Boolean = false
+    var isBPressedPlayer2: Boolean = false
+    var player1MovementAngle: Int = 0
+    var player2MovementAngle: Int = 0
+
     lateinit var p1: Player
     lateinit var p2: Player
+
+    lateinit var player1AButton: ImageView
+    lateinit var player1BButton: ImageView
+    lateinit var player2AButton: ImageView
+    lateinit var player2BButton: ImageView
+    lateinit var player1Joystick : Joystick
+    lateinit var player2Joystick: Joystick
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +64,32 @@ class BattleActivity : AppCompatActivity() {
         this.battle = Battle(p1, p2, arena_height, arena_width)
 
         // Initialize map
-//        this.arena = findViewById<SurfaceView>(R.id.arena)
+        this.arena = findViewById<SurfaceView>(R.id.arena)
+
+        this.player1AButton = findViewById<ImageView>(R.id.player1AButton)
+        this.player1BButton = findViewById<ImageView>(R.id.player1BButton)
+        this.player2AButton = findViewById<ImageView>(R.id.player2AButton)
+        this.player2BButton = findViewById<ImageView>(R.id.player2BButton)
+
         this.player1Joystick = findViewById<Joystick>(R.id.player1joystick)
         this.player2Joystick = findViewById<Joystick>(R.id.player2joystick)
+
+        player1Joystick.setJoystickListener(this)
+        player2Joystick.setJoystickListener(this)
+
+        override fun onJoystickMoved(xPercent: Float, yPercent: Float) {
+            TODO("Not yet implemented")
+        }
+
+        override fun onAngleChanged(joystick: Joystick, angle: Float) {
+            val id = joystick.getJoystickId()
+
+            if(id == 1){
+                player1MovementAngle = angle.toInt()
+            }else{
+                player2MovementAngle = angle.toInt()
+            }
+        }
 
     }
 

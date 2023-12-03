@@ -6,6 +6,8 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.opengl.ETC1.getHeight
 import android.opengl.ETC1.getWidth
+import android.view.SurfaceHolder
+import android.view.SurfaceView
 
 
 class BattleDisplay (var battle: Battle){

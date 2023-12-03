@@ -14,6 +14,8 @@ class Player(context: Context, charId: Int) {
     var actionFrame: Int = 0
     lateinit var normal_attack : Attack
     lateinit var special_attack : Attack
+    var att_dmg: Int = 0
+    var spa_dmg: Int = 0
     var spriteSheet: SpriteSheet
     lateinit var def_hitbox: Array<IntArray>
     lateinit var att_hitbox: Array<IntArray>
@@ -28,6 +30,8 @@ class Player(context: Context, charId: Int) {
         // sword character
         if (charId == 1) {
             this.hp = 150
+            this.att_dmg = 10
+            this.spa_dmg = 18
             this.normal_attack = Attack(1, 5, 2)
             this.special_attack = Attack(3, 5, 4)
             this.speed = 100
@@ -38,6 +42,8 @@ class Player(context: Context, charId: Int) {
         // spear character
         else if (charId == 2) {
             this.hp = 120
+            this.att_dmg = 8
+            this.spa_dmg = 14
             this.normal_attack = Attack(1, 4, 1)
             this.special_attack = Attack(1, 1, 3)
             this.speed = 120
@@ -48,6 +54,8 @@ class Player(context: Context, charId: Int) {
         // shield character
         else if (charId == 3) {
             this.hp = 200
+            this.att_dmg = 12
+            this.spa_dmg = 20
             this.normal_attack = Attack(2, 6, 2)
             this.special_attack = Attack(0, 6, 2)
             this.speed = 80

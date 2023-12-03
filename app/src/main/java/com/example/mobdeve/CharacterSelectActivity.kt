@@ -56,19 +56,19 @@ class CharacterSelectActivity : AppCompatActivity() {
         // if player is player 2
         else if (v.id === R.id.ivShieldP2) {
             this.p2CharSelect = 3
-            charaView = findViewById<ImageView>(R.id.ivCharacviewP1)
+            charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
             classname = "Shield"
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.shield_standing_1, applicationContext.getTheme()));
         }
         else if (v.id === R.id.ivSpearP2) {
             this.p2CharSelect = 2
-            charaView = findViewById<ImageView>(R.id.ivCharacviewP1)
+            charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
             classname = "Spear"
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.spear_standing_1, applicationContext.getTheme()));
         }
         else if (v.id === R.id.ivSwordP2) {
             this.p2CharSelect = 1
-            charaView = findViewById<ImageView>(R.id.ivCharacviewP1)
+            charaView = findViewById<ImageView>(R.id.ivCharacviewP2)
             classname = "Sword"
             charaView.setImageDrawable(getResources().getDrawable(R.drawable.sword_standing_1, applicationContext.getTheme()));
         }

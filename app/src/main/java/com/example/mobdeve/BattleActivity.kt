@@ -74,8 +74,8 @@ class BattleActivity : AppCompatActivity() {
 
         arena.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                arena_height = arena.width
-                arena_width = arena.height
+                arena_height = arena.height
+                arena_width = arena.width
 
                 p1.posX = (arena_width / 2F).toInt()
                 p1.posY = (arena_height / 4F).toInt()
@@ -105,7 +105,12 @@ class BattleActivity : AppCompatActivity() {
                 battle.update(p1JsAngle, p2JsAngle, p1ABool, p1BBool, p2ABool, p2BBool)
                 println("Running loop on thread: ${Thread.currentThread().name}")
                 delay(1000) // non-blocking delay for 1 second (default time unit is ms)
-                arena.renderCanvas(update())
+
+                var bitmap = update()
+
+                Log.w("BITMAP", bitmap.toString())
+
+                arena.updateBitmap(bitmap)
             }
         }
     }
@@ -113,10 +118,12 @@ class BattleActivity : AppCompatActivity() {
     fun update() : Bitmap {
         var bitmap: Bitmap = Bitmap.createBitmap(arena_width, arena_height, Bitmap.Config.ARGB_8888)
         var canvas: Canvas = Canvas(bitmap)
-        val p1_current : Sprite = p1.spriteSheet.getSprite(p1.currentAction,p1.actionFrame)
-        val p2_current : Sprite = p2.spriteSheet.getSprite(p2.currentAction,p2.actionFrame)
-        p1_current.draw(canvas, p1.posX, p1.posY)
-        p2_current.draw(canvas, p2.posX, p2.posY)
+
+        val p1_current: Bitmap = p1.spriteSheet.getSprite(p1.currentAction,p1.actionFrame)
+        canvas.drawBitmap(p1_current, (p1.posX).toFloat(), (p1.posY).toFloat(), null)
+
+        val p2_current: Bitmap = p2.spriteSheet.getSprite(p2.currentAction,p2.actionFrame)
+        canvas.drawBitmap(p2_current, (p2.posX).toFloat(), (p2.posY).toFloat(), null)
 
         // check if gameOver
         if (p1.hp <= 0 || p2.hp <= 0) {

@@ -12,20 +12,16 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 
 class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs), SurfaceHolder.Callback {
+
     private lateinit var canvas: Canvas
-    private lateinit var holder: SurfaceHolder
+    private var bitmap: Bitmap? = null
+
     init{
-        holder = getHolder()
         holder.addCallback(this)
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-    }
-
     override fun surfaceCreated(holder: SurfaceHolder) {
-        canvas = holder.lockCanvas()
-        holder.unlockCanvasAndPost(canvas)
+        drawBitmap()
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
@@ -33,16 +29,21 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        // Handle surface destruction if nee
+        // Handle surface destruction if needed
     }
 
-    fun renderCanvas(bitmap: Bitmap) {
-        if (::canvas.isInitialized) {
-            canvas = holder.lockCanvas()
+    fun drawBitmap() {
+        bitmap?.let {
+            val canvas = holder.lockCanvas()
             if (canvas != null) {
-                canvas.drawBitmap(bitmap, 0f, 0f, null)
+                canvas.drawBitmap(it, 0F, 0F, null)
                 holder.unlockCanvasAndPost(canvas)
             }
         }
+    }
+
+    fun updateBitmap(bitmap: Bitmap){
+        this.bitmap = bitmap
+        drawBitmap()
     }
 }

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
@@ -69,8 +70,66 @@ class BattleActivity : AppCompatActivity() {
         player2AButton = findViewById<ImageView>(R.id.player2AButton)
         player2BButton = findViewById<ImageView>(R.id.player2BButton)
 
+        player1AButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // The user touched the screen
+                    p1ABool = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // The user lifted their finger
+                    p1ABool = false
+                }
+            }
+            false
+        }
+
+        player1BButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // The user touched the screen
+                    p1BBool = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // The user lifted their finger
+                    p1BBool = false
+                }
+            }
+            false
+        }
+
+        player2AButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // The user touched the screen
+                    p2ABool = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // The user lifted their finger
+                    p2ABool = false
+                }
+            }
+            false
+        }
+
+        player2BButton.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // The user touched the screen
+                    p2BBool = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    // The user lifted their finger
+                    p2BBool = false
+                }
+            }
+            false
+        }
+
+
         player1Joystick = findViewById<Joystick>(R.id.player1joystick)
         player2Joystick = findViewById<Joystick>(R.id.player2joystick)
+
 
         arena.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -100,33 +159,12 @@ class BattleActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
             while (true) { // infinite loop
 
-                player1AButton.setOnClickListener {
-                    p1ABool = true
-                }
-
-                player1BButton.setOnClickListener {
-                    p1BBool = true
-                }
-
-                player2AButton.setOnClickListener {
-                    p2ABool = true
-                }
-
-                player2BButton.setOnClickListener {
-                    p2BBool = true
-                }
-
                 p1JsAngle = player1Joystick.angle
                 p2JsAngle = player2Joystick.angle
 
                 battle.update(p1JsAngle, p2JsAngle, p1ABool, p1BBool, p2ABool, p2BBool)
                 println("Running loop on thread: ${Thread.currentThread().name}")
                 delay(1000) // non-blocking delay for 1 second (default time unit is ms)
-
-                p1ABool = false
-                p1BBool = false
-                p2ABool = false
-                p2BBool = false
 
                 arena.updateBitmap(update())
             }

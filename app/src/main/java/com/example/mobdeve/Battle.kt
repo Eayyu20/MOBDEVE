@@ -113,11 +113,11 @@ class Battle(var p1: Player, var p2: Player) {
 
         if (p2.currentAction < 2) {
             // currently idle or moving
-            if (p1normal) {
+            if (p2normal) {
                 p2.currentAction = 2
                 p2.actionFrame = 0
             }
-            else if (p1special) {
+            else if (p2special) {
                 p2.currentAction = 3
                 p2.actionFrame = 0
             }

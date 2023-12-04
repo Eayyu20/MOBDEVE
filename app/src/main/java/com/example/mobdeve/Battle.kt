@@ -180,106 +180,102 @@ class Battle(var p1: Player, var p2: Player) {
         if (p1normal && ifCollide(p2.def_hitbox, p1.att_hitbox)) {
             // if p2 is mid attack, superarmor
             if (p2.currentAction > 1 &&
-                ((p2.currentAction == 1 && p2.actionFrame > p2.normal_attack.windupFC && p2.actionFrame <= p2.normal_attack.hitFC) ||
-                (p2.currentAction == 1 && p2.actionFrame > p2.special_attack.windupFC && p2.actionFrame <= p2.special_attack.hitFC))) {
-                p2.hp -= p1.att_dmg
-                Log.w("HP", "p2 HP: " + p2.hp.toString())
+                ((p2.currentAction == 2 && p2.actionFrame > p2.normal_attack.windupFC && p2.actionFrame <= p2.normal_attack.hitFC) ||
+                (p2.currentAction == 3 && p2.actionFrame > p2.special_attack.windupFC && p2.actionFrame <= p2.special_attack.hitFC))) {
+                p2.actionFrame += 1
             }
             else {
                 p2.currentAction = 5 // take damage
                 p2.actionFrame = 0
             }
+            p2.hp -= p1.att_dmg
+            Log.w("HP", "p2 HP: " + p2.hp.toString())
             // set p1 current frame to end of hitFC
             p1.actionFrame = p1.normal_attack.hitFC + 1
         }
         if (p1special && ifCollide(p2.def_hitbox, p1.spa_hitbox)) {
             // if p2 is mid attack, superarmor
             if (p2.currentAction > 1 &&
-                ((p2.currentAction == 1 && p2.actionFrame > p2.normal_attack.windupFC && p2.actionFrame <= p2.normal_attack.hitFC) ||
-                        (p2.currentAction == 1 && p2.actionFrame > p2.special_attack.windupFC && p2.actionFrame <= p2.special_attack.hitFC))) {
-                p2.hp -= p1.spa_dmg
-                Log.w("HP", "p2 HP: " + p2.hp.toString())
+                ((p2.currentAction == 2 && p2.actionFrame > p2.normal_attack.windupFC && p2.actionFrame <= p2.normal_attack.hitFC) ||
+                        (p2.currentAction == 3 && p2.actionFrame > p2.special_attack.windupFC && p2.actionFrame <= p2.special_attack.hitFC))) {
+                p2.actionFrame += 1
             }
             else {
                 p2.currentAction = 5 // take damage
                 p2.actionFrame = 0
             }
+
+            p2.hp -= p1.spa_dmg
+            Log.w("HP", "p2 HP: " + p2.hp.toString())
             // set p1 current frame to end of hitFC
             p1.actionFrame = p1.special_attack.hitFC + 1
         }
         if (p2normal && ifCollide(p1.def_hitbox, p2.att_hitbox)) {
             // if p1 is mid attack, superarmor
             if (p1.currentAction > 1 &&
-                ((p1.currentAction == 1 && p1.actionFrame > p1.normal_attack.windupFC && p1.actionFrame <= p1.normal_attack.hitFC) ||
-                        (p1.currentAction == 1 && p1.actionFrame > p1.special_attack.windupFC && p1.actionFrame <= p1.special_attack.hitFC))) {
-                p1.hp -= p2.att_dmg
-                Log.w("HP", "p1 HP: " + p1.hp.toString())
+                ((p1.currentAction == 2 && p1.actionFrame > p1.normal_attack.windupFC && p1.actionFrame <= p1.normal_attack.hitFC) ||
+                        (p1.currentAction == 3 && p1.actionFrame > p1.special_attack.windupFC && p1.actionFrame <= p1.special_attack.hitFC))) {
+                p2.actionFrame += 1
             }
             else {
                 p1.currentAction = 5 // take damage
                 p1.actionFrame = 0
             }
+            p1.hp -= p2.att_dmg
+            Log.w("HP", "p1 HP: " + p1.hp.toString())
             // set p2 current frame to end of hitFC
             p2.actionFrame = p2.normal_attack.hitFC + 1
         }
         if (p2special && ifCollide(p1.def_hitbox, p2.spa_hitbox)) {
             // if p1 is mid attack, superarmor
             if (p1.currentAction > 1 &&
-                ((p1.currentAction == 1 && p1.actionFrame > p1.normal_attack.windupFC && p1.actionFrame <= p1.normal_attack.hitFC) ||
-                        (p1.currentAction == 1 && p1.actionFrame > p1.special_attack.windupFC && p1.actionFrame <= p1.special_attack.hitFC))) {
-                p1.hp -= p2.spa_dmg
-                Log.w("HP", "p1 HP: " + p1.hp.toString())
+                ((p1.currentAction == 2 && p1.actionFrame > p1.normal_attack.windupFC && p1.actionFrame <= p1.normal_attack.hitFC) ||
+                        (p1.currentAction == 3 && p1.actionFrame > p1.special_attack.windupFC && p1.actionFrame <= p1.special_attack.hitFC))) {
+                p1.actionFrame += 1
             }
             else {
                 p1.currentAction = 5 // take damage
                 p1.actionFrame = 0
             }
+            p1.hp -= p2.spa_dmg
+            Log.w("HP", "p1 HP: " + p1.hp.toString())
             // set p2 current frame to end of hitFC
             p2.actionFrame = p2.special_attack.hitFC + 1
         }
     }
 
     fun ifCollide(def: Array<IntArray>, att: Array<IntArray>): Boolean {
-        val rect_lines = arrayOf(
-            intArrayOf(def[1][0] - def[0][0], def[0][1] - def[1][1], def[1][0] - def[0][0] + def[0][1] - def[1][1]),
-            intArrayOf(def[2][0] - def[1][0], def[1][1] - def[2][1], def[2][0] - def[1][0] + def[1][1] - def[2][1]),
-            intArrayOf(def[3][0] - def[2][0], def[2][1] - def[3][1], def[3][0] - def[2][0] + def[2][1] - def[3][1]),
-            intArrayOf(def[0][0] - def[3][0], def[3][1] - def[0][1], def[0][0] - def[3][0] + def[3][1] - def[0][1]),
-            )
-
-        var prevCoord: IntArray = att[0]
-        var currentLine: IntArray
-        var det : Double
-        var intersect_flag : Boolean = false
-        var t : Double
-        var u : Double
-
-        for (coord in att) {
-            if (coord != prevCoord) {
-                currentLine = intArrayOf(coord[0] - prevCoord[0], prevCoord[1] - coord[1], coord[0] - prevCoord[0] + prevCoord[1] - coord[1])
-                for (line in rect_lines) {
-                    det = (currentLine[0] * line[1] - currentLine[1] * line[0]).toDouble()
-                    Log.w("det", "det: " + det.toString())
-                    if (det != 0.0) {
-                        t = (line[2] * currentLine[1] - currentLine[2] * line[1]) / det
-                        u = (line[2] * currentLine[0] - currentLine[2] * line[0]) / det
-                        Log.w("det", "t: " + t.toString())
-                        Log.w("det", "u: " + u.toString())
-                        if ((0 <= t && t <= 1) && (0 <= u && u <= 1)) {
-                            intersect_flag = true
-                            break
-                        }
-                    }
-                }
-                if (intersect_flag) {
-                    break
-                }
+        for (i in def.indices) {
+            val normal = getNormal(def[i], def[(i+1)%def.size])
+            val proj1 = project(def, normal)
+            val proj2 = project(att, normal)
+            if (!overlaps(proj1, proj2)) {
+                Log.w("ifCollide", "ifCollide: False")
+                return false
             }
-            prevCoord = coord
+            Log.w("att", "att: " + att.contentDeepToString())
+            Log.w("def", "def: " + def.contentDeepToString())
         }
-        Log.w("att", "att: " + att.contentDeepToString())
-        Log.w("def", "def: " + def.contentDeepToString())
-        Log.w("ifCollide", "Collide: " + intersect_flag.toString())
-        return intersect_flag
+        Log.w("ifCollide", "ifCollide: True")
+        return true
+    }
+
+    fun getNormal(point1: IntArray, point2: IntArray): IntArray {
+        return intArrayOf(point2[1] - point1[1], point1[0] - point2[0])
+    }
+
+    fun project(polygon: Array<IntArray>, normal: IntArray): Pair<Int, Int> {
+        var minDot = Int.MAX_VALUE
+        var maxDot = Int.MIN_VALUE
+        for (point in polygon) {
+            val dot = point[0]*normal[0] + point[1]*normal[1]
+            minDot = minOf(minDot, dot)
+            maxDot = maxOf(maxDot, dot)
+        }
+        return Pair(minDot, maxDot)
+    }
+
+    fun overlaps(proj1: Pair<Int, Int>, proj2: Pair<Int, Int>): Boolean {
+        return proj1.first <= proj2.second && proj1.second >= proj2.first
     }
 }

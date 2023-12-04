@@ -36,6 +36,8 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
         bitmap?.let {
             val canvas = holder.lockCanvas()
             if (canvas != null) {
+                // Fill the canvas with a color (e.g., white) before drawing the bitmap
+                canvas.drawColor(Color.TRANSPARENT)
                 canvas.drawBitmap(it, 0F, 0F, null)
                 holder.unlockCanvasAndPost(canvas)
             }

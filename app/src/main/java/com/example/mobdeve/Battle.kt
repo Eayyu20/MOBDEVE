@@ -7,11 +7,11 @@ import java.lang.Math.sin
 class Battle(var p1: Player, var p2: Player) {
     var gameOver: Boolean = false
     init {
-        this.p1.posX = (1000 / 2).toInt()
-        this.p1.posY = ((1000 / 4) - 32).toInt()
-
         this.p2.posX = (1000 / 2).toInt()
-        this.p2.posY = ((1000 * 3 / 4) + 32).toInt()
+        this.p2.posY = ((1000 / 4) - 32).toInt()
+
+        this.p1.posX = (1000 / 2).toInt()
+        this.p1.posY = ((1000 * 3 / 4) + 32).toInt()
 
         this.p1.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
         this.p2.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death

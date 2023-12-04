@@ -32,10 +32,8 @@ class BattleActivity : AppCompatActivity() {
     lateinit var player1Joystick : Joystick
     lateinit var player2Joystick: Joystick
 
-    var p1JsAngle: Float = 0F
     var p1ABool: Boolean = false
     var p1BBool: Boolean = false
-    var p2JsAngle: Float = 0F
     var p2ABool: Boolean = false
     var p2BBool: Boolean = false
 
@@ -134,12 +132,12 @@ class BattleActivity : AppCompatActivity() {
         var p1_current: Bitmap = getTile(p1)
         p1_current = flipY(p1_current)
         p1_current = rotate(p1_current, 90F)
-        if (p1.angle <= 0) p1_current = flipBitmap(p1_current)
+        if (p1.angle > 0) p1_current = flipBitmap(p1_current)
         canvas.drawBitmap(p1_current, (p1.posX).toFloat(), (p1.posY).toFloat(), null)
 
         var p2_current: Bitmap = getTile(p2)
         p2_current = rotate(p2_current, 270F)
-        if (p2.angle <= 0) p2_current = flipBitmap(p2_current)
+        if (p2.angle < 0) p2_current = flipBitmap(p2_current)
         canvas.drawBitmap(p2_current, (p2.posX).toFloat(), (p2.posY).toFloat(), null)
 
         // check if gameOver

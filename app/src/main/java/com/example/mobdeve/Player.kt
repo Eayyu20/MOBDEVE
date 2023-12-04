@@ -36,7 +36,7 @@ class Player(context: Context, charId: Int) {
             this.spa_dmg = 18
             this.normal_attack = Attack(1, 5, 2)
             this.special_attack = Attack(3, 5, 4)
-            this.speed = 100
+            this.speed = 25
             this.def_hitbox = arrayOf(intArrayOf(21,35), intArrayOf(32,35), intArrayOf(21,8), intArrayOf(32,8))
             this.att_hitbox = arrayOf(intArrayOf(16,36), intArrayOf(60,32), intArrayOf(32,15), intArrayOf(55,9))
             this.spa_hitbox = arrayOf(intArrayOf(39,27), intArrayOf(54,27), intArrayOf(39,5), intArrayOf(54,5))
@@ -48,7 +48,7 @@ class Player(context: Context, charId: Int) {
             this.spa_dmg = 14
             this.normal_attack = Attack(1, 4, 1)
             this.special_attack = Attack(1, 1, 3)
-            this.speed = 120
+            this.speed = 30
             this.def_hitbox = arrayOf(intArrayOf(25,31), intArrayOf(23,31), intArrayOf(26,4), intArrayOf(33,4))
             this.att_hitbox = arrayOf(intArrayOf(28,19), intArrayOf(57,19))
             this.spa_hitbox = arrayOf(intArrayOf(18,60), intArrayOf(47,53), intArrayOf(29,14), intArrayOf(56,23))
@@ -60,7 +60,7 @@ class Player(context: Context, charId: Int) {
             this.spa_dmg = 20
             this.normal_attack = Attack(2, 6, 2)
             this.special_attack = Attack(0, 6, 2)
-            this.speed = 80
+            this.speed = 20
             this.def_hitbox = arrayOf(intArrayOf(23,48), intArrayOf(42,48), intArrayOf(23,6), intArrayOf(42,6))
             this.att_hitbox = arrayOf(intArrayOf(49,35), intArrayOf(59,35), intArrayOf(49,9), intArrayOf(59,9))
             this.spa_hitbox = arrayOf(intArrayOf(33,36), intArrayOf(43,36), intArrayOf(33,10), intArrayOf(43,10))

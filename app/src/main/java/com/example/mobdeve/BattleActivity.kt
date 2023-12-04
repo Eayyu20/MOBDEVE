@@ -119,7 +119,7 @@ class BattleActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
             while (true) { // infinite loop
                 battle.update(player1Joystick.angle, player2Joystick.angle, p1ABool, p1BBool, p2ABool, p2BBool)
-                delay(166) // non-blocking delay for 1 second (default time unit is ms)
+                delay(86) // non-blocking delay for 1 second (default time unit is ms)
                 arena.updateBitmap(update())
             }
         }

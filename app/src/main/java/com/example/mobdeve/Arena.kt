@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.util.Log
 import android.view.Surface
@@ -36,8 +37,7 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
         bitmap?.let {
             val canvas = holder.lockCanvas()
             if (canvas != null) {
-                // Fill the canvas with a color (e.g., white) before drawing the bitmap
-                canvas.drawColor(Color.TRANSPARENT)
+                canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
                 canvas.drawBitmap(it, 0F, 0F, null)
                 holder.unlockCanvasAndPost(canvas)
             }

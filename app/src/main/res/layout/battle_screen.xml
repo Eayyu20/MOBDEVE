@@ -14,11 +14,11 @@
         android:id="@+id/player1joystick"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:visibility="visible"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="80dp"
         android:layout_marginEnd="282dp"
         android:layout_marginBottom="66dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -30,11 +30,11 @@
         android:id="@+id/player2joystick"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:visibility="visible"
         android:layout_marginStart="281dp"
         android:layout_marginTop="66dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="80dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/arena"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -61,10 +61,10 @@
         android:rotation="180"
         app:layout_constraintBottom_toTopOf="@+id/arena"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.161"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.918"
+        app:layout_constraintVertical_bias="0.766"
         app:srcCompat="@drawable/red_a" />
 
     <ImageView
@@ -74,10 +74,10 @@
         android:rotation="180"
         app:layout_constraintBottom_toTopOf="@+id/arena"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintHorizontal_bias="0.34"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.505"
+        app:layout_constraintVertical_bias="0.364"
         app:srcCompat="@drawable/red_b" />
 
     <ImageView
@@ -89,7 +89,7 @@
         app:layout_constraintHorizontal_bias="0.671"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/arena"
-        app:layout_constraintVertical_bias="0.617"
+        app:layout_constraintVertical_bias="0.723"
         app:srcCompat="@drawable/blue_b" />
 
     <ImageView
@@ -98,10 +98,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.926"
+        app:layout_constraintHorizontal_bias="0.941"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/arena"
-        app:layout_constraintVertical_bias="0.185"
+        app:layout_constraintVertical_bias="0.349"
         app:srcCompat="@drawable/blue_a" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Matrix
 import android.os.Build
 import android.os.Bundle
+import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -19,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Collections.rotate
 
 class BattleActivity : AppCompatActivity() {
     lateinit var battle: Battle
@@ -138,10 +140,8 @@ class BattleActivity : AppCompatActivity() {
             // Pause the game
             if(!isPaused){
                 isPaused = true
-                arena.pauseBitmap()
-            }else{
+            } else {
                 isPaused = false
-                runLoopOnThread()
             }
         }
 
@@ -153,10 +153,16 @@ class BattleActivity : AppCompatActivity() {
 
     fun runLoopOnThread() {
         GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
-            while (!battle.gameOver && !isPaused) { // infinite loop
-                battle.update(player1Joystick.angle, player2Joystick.angle, p1ABool, p1BBool, p2ABool, p2BBool)
-                delay(86) // non-blocking delay for 1 second (default time unit is ms)
-                arena.updateBitmap(update())
+            while (!battle.gameOver) { // infinite loop
+                if (isPaused) {
+                    arena.pauseBitmap()
+                    delay(100)
+                }
+                else {
+                    battle.update(player1Joystick.angle, player2Joystick.angle, p1ABool, p1BBool, p2ABool,p2BBool)
+                    delay(86) // non-blocking delay for 1 second (default time unit is ms)
+                    arena.updateBitmap(update())
+                }
             }
         }
     }

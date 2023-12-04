@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
 class HP(context: Context, attrs: AttributeSet) : AppCompatTextView(context, attrs) {
-    var HPString: String = "HP: 100"
+    var HPString: String = "HP: "
 
     fun updateHP(newHP: Int){
         HPString = "HP: ${newHP}"

@@ -66,6 +66,9 @@ class BattleActivity : AppCompatActivity() {
         player1HP = findViewById<HP>(R.id.player1HP)
         player2HP = findViewById<HP>(R.id.player2HP)
 
+        player1HP.updateHP(p1.hp)
+        player2HP.updateHP(p2.hp)
+
         player1AButton.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {

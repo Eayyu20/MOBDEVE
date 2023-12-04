@@ -6,7 +6,7 @@ import android.util.Log
 
 class Player(context: Context, charId: Int) {
     // 1 - sword, 2 - spear, 3 - shield
-    val ARENA_SIZE: Int = 720
+    val ARENA_SIZE: Int = 800
     var charId: Int = 0
     var hp: Int = 100
     var posX: Int = 0
@@ -23,6 +23,12 @@ class Player(context: Context, charId: Int) {
     lateinit var def_hitbox: Array<IntArray>
     lateinit var att_hitbox: Array<IntArray>
     lateinit var spa_hitbox: Array<IntArray>
+    lateinit var const_def_hitbox: Array<IntArray>
+    lateinit var const_att_hitbox: Array<IntArray>
+    lateinit var const_spa_hitbox: Array<IntArray>
+    lateinit var neg_const_def_hitbox: Array<IntArray>
+    lateinit var neg_const_att_hitbox: Array<IntArray>
+    lateinit var neg_const_spa_hitbox: Array<IntArray>
 
     init {
         this.charId = charId
@@ -38,9 +44,9 @@ class Player(context: Context, charId: Int) {
             this.normal_attack = Attack(1, 5, 2)
             this.special_attack = Attack(3, 5, 4)
             this.speed = 25
-            this.def_hitbox = arrayOf(intArrayOf(21,35), intArrayOf(32,35), intArrayOf(21,8), intArrayOf(32,8))
-            this.att_hitbox = arrayOf(intArrayOf(16,36), intArrayOf(60,32), intArrayOf(32,15), intArrayOf(55,9))
-            this.spa_hitbox = arrayOf(intArrayOf(39,27), intArrayOf(54,27), intArrayOf(39,5), intArrayOf(54,5))
+            this.const_def_hitbox = arrayOf(intArrayOf(35,21), intArrayOf(35,32), intArrayOf(8,21), intArrayOf(8,32))
+            this.const_att_hitbox = arrayOf(intArrayOf(36,16), intArrayOf(32,60), intArrayOf(15,32), intArrayOf(9,55))
+            this.const_spa_hitbox = arrayOf(intArrayOf(27,39), intArrayOf(27,54), intArrayOf(5,39), intArrayOf(5, 54))
         }
         // spear character
         else if (charId == 2) {
@@ -50,9 +56,9 @@ class Player(context: Context, charId: Int) {
             this.normal_attack = Attack(1, 4, 1)
             this.special_attack = Attack(1, 1, 3)
             this.speed = 30
-            this.def_hitbox = arrayOf(intArrayOf(25,31), intArrayOf(23,31), intArrayOf(26,4), intArrayOf(33,4))
-            this.att_hitbox = arrayOf(intArrayOf(28,19), intArrayOf(57,19))
-            this.spa_hitbox = arrayOf(intArrayOf(18,60), intArrayOf(47,53), intArrayOf(29,14), intArrayOf(56,23))
+            this.const_def_hitbox = arrayOf(intArrayOf(31,25), intArrayOf(31,23), intArrayOf(4,26), intArrayOf(4,33))
+            this.const_att_hitbox = arrayOf(intArrayOf(19,28), intArrayOf(19,57))
+            this.const_spa_hitbox = arrayOf(intArrayOf(60,18), intArrayOf(53,47), intArrayOf(14,29), intArrayOf(23,56))
         }
         // shield character
         else if (charId == 3) {
@@ -62,12 +68,40 @@ class Player(context: Context, charId: Int) {
             this.normal_attack = Attack(2, 6, 2)
             this.special_attack = Attack(0, 6, 2)
             this.speed = 20
-            this.def_hitbox = arrayOf(intArrayOf(23,48), intArrayOf(42,48), intArrayOf(23,6), intArrayOf(42,6))
-            this.att_hitbox = arrayOf(intArrayOf(49,35), intArrayOf(59,35), intArrayOf(49,9), intArrayOf(59,9))
-            this.spa_hitbox = arrayOf(intArrayOf(33,36), intArrayOf(43,36), intArrayOf(33,10), intArrayOf(43,10))
+            this.const_def_hitbox = arrayOf(intArrayOf(48,23), intArrayOf(48,42), intArrayOf(6,23), intArrayOf(6,42))
+            this.const_att_hitbox = arrayOf(intArrayOf(35,49), intArrayOf(35,59), intArrayOf(9,49), intArrayOf(9,59))
+            this.const_spa_hitbox = arrayOf(intArrayOf(36,33), intArrayOf(36,43), intArrayOf(10,33), intArrayOf(10,43))
         }
         else {
             print("ERR: Character not found.")
+        }
+
+        // initialize consts
+        neg_const_def_hitbox = const_def_hitbox
+        neg_const_att_hitbox = const_att_hitbox
+        neg_const_spa_hitbox = const_spa_hitbox
+
+        neg_const_def_hitbox.forEach { it.forEachIndexed { index, value -> it[index] = value * -1 } }
+        neg_const_att_hitbox.forEach { it.forEachIndexed { index, value -> it[index] = value * -1 } }
+        neg_const_spa_hitbox.forEach { it.forEachIndexed { index, value -> it[index] = value * -1 } }
+    }
+
+    fun initHitboxes() {
+        def_hitbox = incrementCoordinates(const_def_hitbox, posX, posY)
+        att_hitbox = incrementCoordinates(const_att_hitbox, posX, posY)
+        spa_hitbox = incrementCoordinates(const_spa_hitbox, posX, posY)
+    }
+
+    fun updateHitboxes(flip: Boolean) {
+        if (flip) {
+            def_hitbox = incrementCoordinates(const_def_hitbox, posX, posY)
+            att_hitbox = incrementCoordinates(const_att_hitbox, posX, posY)
+            spa_hitbox = incrementCoordinates(const_spa_hitbox, posX, posY)
+        }
+        else {
+            def_hitbox = incrementCoordinates(neg_const_def_hitbox, posX, posY)
+            att_hitbox = incrementCoordinates(neg_const_att_hitbox, posX, posY)
+            spa_hitbox = incrementCoordinates(neg_const_spa_hitbox, posX, posY)
         }
     }
 
@@ -78,5 +112,16 @@ class Player(context: Context, charId: Int) {
         if (posY + y_displacement < 0) posY = 0
         else if (posY + y_displacement > ARENA_SIZE - 96) posY = ARENA_SIZE - 96
         else posY += y_displacement
+    }
+
+    private fun incrementCoordinates(coordinates: Array<IntArray>, x_inc: Int, y_inc: Int): Array<IntArray> {
+        val result = Array(coordinates.size) { IntArray(2) }
+
+        for (i in coordinates.indices) {
+            result[i][0] = coordinates[i][0] + x_inc
+            result[i][1] = coordinates[i][1] + y_inc
+        }
+
+        return result
     }
 }

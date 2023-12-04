@@ -1,18 +1,22 @@
 package com.example.mobdeve
 
+import android.graphics.Bitmap
 import android.util.Log
 import java.lang.Math.cos
 import java.lang.Math.sin
 
 class Battle(var p1: Player, var p2: Player) {
     var gameOver: Boolean = false
-    val ARENA_SIZE: Int = 720
+    val ARENA_SIZE: Int = 800
     init {
         this.p2.posX = (ARENA_SIZE / 2).toInt()
         this.p2.posY = ((ARENA_SIZE / 4) - 32).toInt()
 
         this.p1.posX = (ARENA_SIZE / 2).toInt()
         this.p1.posY = ((ARENA_SIZE * 3 / 4) + 32).toInt()
+
+        this.p1.initHitboxes()
+        this.p2.initHitboxes()
 
         this.p1.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
         this.p2.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
@@ -24,6 +28,20 @@ class Battle(var p1: Player, var p2: Player) {
     fun update(p1Joystick: Float, p2Joystick: Float, p1normal: Boolean, p1special: Boolean, p2normal: Boolean, p2special: Boolean) {
         p1.angle = p1Joystick
         p2.angle = p2Joystick
+
+        if (p1.angle > 0) {
+            p1.updateHitboxes(true)
+        }
+        else {
+            p1.updateHitboxes(false)
+        }
+
+        if (p2.angle < 0) {
+            p2.updateHitboxes(true)
+        }
+        else {
+            p2.updateHitboxes(false)
+        }
 
         // handle death
         if (p1.hp <= 0) {
@@ -73,12 +91,12 @@ class Battle(var p1: Player, var p2: Player) {
             }
             else if (p1Joystick != 0F) {
                 p1.currentAction = 1
-                if (p1.actionFrame < 10) p1.actionFrame += 1
+                if (p1.actionFrame < 9) p1.actionFrame += 1
                 else p1.actionFrame = 0
             }
             else if (p1Joystick == 0F) {
                 p1.currentAction = 0
-                if (p1.actionFrame < 12) p1.actionFrame += 1
+                if (p1.actionFrame < 11) p1.actionFrame += 1
                 else p1.actionFrame = 0
             }
         }
@@ -90,7 +108,7 @@ class Battle(var p1: Player, var p2: Player) {
                     p1.actionFrame = 0
                 }
                 else {
-                    if (p1.actionFrame < 10) p1.actionFrame += 1
+                    if (p1.actionFrame < 9) p1.actionFrame += 1
                     else p1.actionFrame = 0
                 }
             }
@@ -104,7 +122,7 @@ class Battle(var p1: Player, var p2: Player) {
             // idle
             else {
                 p1.currentAction = 0
-                if (p1.actionFrame < 12) p1.actionFrame += 1
+                if (p1.actionFrame < 11) p1.actionFrame += 1
                 else p1.actionFrame = 0
             }
         }
@@ -121,12 +139,12 @@ class Battle(var p1: Player, var p2: Player) {
             }
             else if (p2Joystick != 0F) {
                 p2.currentAction = 1
-                if (p2.actionFrame < 10) p2.actionFrame += 1
+                if (p2.actionFrame < 9) p2.actionFrame += 1
                 else p2.actionFrame = 0
             }
             else if (p2Joystick == 0F) {
                 p2.currentAction = 0
-                if (p2.actionFrame < 12) p2.actionFrame += 1
+                if (p2.actionFrame < 11) p2.actionFrame += 1
                 else p2.actionFrame = 0
             }
         }
@@ -138,7 +156,7 @@ class Battle(var p1: Player, var p2: Player) {
                     p2.actionFrame = 0
                 }
                 else {
-                    if (p2.actionFrame < 10) p2.actionFrame += 1
+                    if (p2.actionFrame < 9) p2.actionFrame += 1
                     else p2.actionFrame = 0
                 }
             }
@@ -152,7 +170,7 @@ class Battle(var p1: Player, var p2: Player) {
             // idle
             else {
                 p2.currentAction = 0
-                if (p2.actionFrame < 12) p2.actionFrame += 1
+                if (p2.actionFrame < 11) p2.actionFrame += 1
                 else p2.actionFrame = 0
             }
         }
@@ -256,7 +274,88 @@ class Battle(var p1: Player, var p2: Player) {
             }
             prevCoord = coord
         }
+        Log.w("att", "att: " + att.contentDeepToString())
+        Log.w("def", "def: " + def.contentDeepToString())
         Log.w("ifCollide", "Collide: " + intersect_flag.toString())
         return intersect_flag
+    }
+
+
+    fun rotate90(matrix: Array<IntArray>): Array<IntArray> {
+        val rows = matrix.size
+        val cols = matrix[0].size
+        val result = Array(cols) { IntArray(rows) }
+
+        // Transpose the matrix
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                result[j][i] = matrix[i][j]
+            }
+        }
+
+        // Reverse each row
+        for (i in 0 until cols) {
+            for (j in 0 until rows / 2) {
+                val temp = result[i][j]
+                result[i][j] = result[i][rows - j - 1]
+                result[i][rows - j - 1] = temp
+            }
+        }
+
+        return result
+    }
+
+    fun rotate270(matrix: Array<IntArray>): Array<IntArray> {
+        val rows = matrix.size
+        val cols = matrix[0].size
+        val result = Array(cols) { IntArray(rows) }
+
+        // Transpose the matrix
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                result[j][i] = matrix[i][j]
+            }
+        }
+
+        // Reverse each column
+        for (i in 0 until cols) {
+            for (j in 0 until rows / 2) {
+                val temp = result[i][j]
+                result[i][j] = result[i][rows - j - 1]
+                result[i][rows - j - 1] = temp
+            }
+        }
+
+        return result
+    }
+
+    fun flipHorizontal(matrix: Array<IntArray>): Array<IntArray> {
+        val rows = matrix.size
+        val cols = matrix[0].size
+        val result = Array(rows) { IntArray(cols) }
+
+        // Flip each row horizontally
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                result[i][j] = matrix[i][cols - 1 - j]
+            }
+        }
+
+        return result
+    }
+
+    fun flipVertical(matrix: Array<IntArray>): Array<IntArray> {
+        val rows = matrix.size
+        val cols = matrix[0].size
+        val result = Array(rows) { IntArray(cols) }
+
+        // Flip each column vertically
+        for (i in 0 until rows) {
+            for (j in 0 until cols) {
+                result[i][j] = matrix[rows - 1 - i][j]
+            }
+        }
+
+        return result
     }
 }

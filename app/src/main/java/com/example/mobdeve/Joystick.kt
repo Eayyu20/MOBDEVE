@@ -62,7 +62,6 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        Log.w("onDraw", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
         drawOnCanvas(holder)
     }
 
@@ -74,9 +73,6 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
         innerCircleX = width / 2F
         innerCircleY = height / 2F
         angle = 0F
-
-        Log.w("surfaceCreated", " width: ${width}, height: ${height}")
-        Log.w("surfaceCreated", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
         drawOnCanvas(holder)
     }
 
@@ -112,7 +108,6 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
         innerCircleX = centerX
         innerCircleY = centerY
         angle = 0F
-        Log.w("resetJoystick", " centerX: ${centerX}, centerY: ${centerY}, angle: ${angle}")
         invalidate()
     }
 }

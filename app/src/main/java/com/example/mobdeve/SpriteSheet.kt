@@ -30,7 +30,6 @@ class SpriteSheet (context: Context, char_type: Int){
     }
 
     fun getSprite(idxRow: Int, idxCol: Int): Bitmap {
-        Log.w("Sprite", "Sprite x: ${idxRow}, y: ${idxCol}")
         return Bitmap.createBitmap(bitmap, idxCol * SPRITE_WIDTH_PIXELS, idxRow * SPRITE_HEIGHT_PIXELS, SPRITE_WIDTH_PIXELS, SPRITE_HEIGHT_PIXELS)
     }
 }

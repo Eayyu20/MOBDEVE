@@ -72,8 +72,6 @@ class Player(context: Context, charId: Int) {
     }
 
     fun move(x_displacement: Int, y_displacement: Int) {
-        Log.w("pos", "posX: ${posX} x_dis: ${x_displacement}")
-        Log.w("pos", "posY: ${posY} y_dis: ${y_displacement}")
         if (posX + x_displacement < 0) posX = 0
         else if (posX + x_displacement > ARENA_SIZE - 64) posX = ARENA_SIZE - 64
         else posX += x_displacement

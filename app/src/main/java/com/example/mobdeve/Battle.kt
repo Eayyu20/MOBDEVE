@@ -167,6 +167,7 @@ class Battle(var p1: Player, var p2: Player) {
                 ((p2.currentAction == 1 && p2.actionFrame > p2.normal_attack.windupFC && p2.actionFrame <= p2.normal_attack.hitFC) ||
                 (p2.currentAction == 1 && p2.actionFrame > p2.special_attack.windupFC && p2.actionFrame <= p2.special_attack.hitFC))) {
                 p2.hp -= p1.att_dmg
+                Log.w("HP", "p2 HP: " + p2.hp.toString())
             }
             else {
                 p2.currentAction = 5 // take damage
@@ -181,6 +182,7 @@ class Battle(var p1: Player, var p2: Player) {
                 ((p2.currentAction == 1 && p2.actionFrame > p2.normal_attack.windupFC && p2.actionFrame <= p2.normal_attack.hitFC) ||
                         (p2.currentAction == 1 && p2.actionFrame > p2.special_attack.windupFC && p2.actionFrame <= p2.special_attack.hitFC))) {
                 p2.hp -= p1.spa_dmg
+                Log.w("HP", "p2 HP: " + p2.hp.toString())
             }
             else {
                 p2.currentAction = 5 // take damage
@@ -195,6 +197,7 @@ class Battle(var p1: Player, var p2: Player) {
                 ((p1.currentAction == 1 && p1.actionFrame > p1.normal_attack.windupFC && p1.actionFrame <= p1.normal_attack.hitFC) ||
                         (p1.currentAction == 1 && p1.actionFrame > p1.special_attack.windupFC && p1.actionFrame <= p1.special_attack.hitFC))) {
                 p1.hp -= p2.att_dmg
+                Log.w("HP", "p1 HP: " + p1.hp.toString())
             }
             else {
                 p1.currentAction = 5 // take damage
@@ -209,6 +212,7 @@ class Battle(var p1: Player, var p2: Player) {
                 ((p1.currentAction == 1 && p1.actionFrame > p1.normal_attack.windupFC && p1.actionFrame <= p1.normal_attack.hitFC) ||
                         (p1.currentAction == 1 && p1.actionFrame > p1.special_attack.windupFC && p1.actionFrame <= p1.special_attack.hitFC))) {
                 p1.hp -= p2.spa_dmg
+                Log.w("HP", "p1 HP: " + p1.hp.toString())
             }
             else {
                 p1.currentAction = 5 // take damage
@@ -254,7 +258,7 @@ class Battle(var p1: Player, var p2: Player) {
             }
             prevCoord = coord
         }
-
+        Log.w("ifCollide", "Collide: " + intersect_flag.toString())
         return intersect_flag
     }
 }

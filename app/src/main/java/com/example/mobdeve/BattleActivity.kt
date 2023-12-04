@@ -82,12 +82,22 @@ class BattleActivity : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     // The user touched the screen
                     p1ABool = true
-                    player1HP.updateHP(p1.hp)
+
+                    if(p2.hp < 0){
+                        p2.hp = 0
+                    }
+
                     player2HP.updateHP(p2.hp)
                 }
                 MotionEvent.ACTION_UP -> {
                     // The user lifted their finger
                     p1ABool = false
+
+                    if(p2.hp < 0){
+                        p2.hp = 0
+                    }
+
+                    player2HP.updateHP(p2.hp)
                 }
             }
             true
@@ -97,12 +107,22 @@ class BattleActivity : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     // The user touched the screen
                     p1BBool = true
-                    player1HP.updateHP(p1.hp)
+
+                    if(p2.hp < 0){
+                        p2.hp = 0
+                    }
+
                     player2HP.updateHP(p2.hp)
                 }
                 MotionEvent.ACTION_UP -> {
                     // The user lifted their finger
                     p1BBool = false
+
+                    if(p2.hp < 0){
+                        p2.hp = 0
+                    }
+
+                    player2HP.updateHP(p2.hp)
                 }
             }
             true
@@ -112,12 +132,22 @@ class BattleActivity : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     // The user touched the screen
                     p2ABool = true
+
+                    if(p1.hp < 0){
+                        p1.hp = 0
+                    }
+
                     player1HP.updateHP(p1.hp)
-                    player2HP.updateHP(p2.hp)
                 }
                 MotionEvent.ACTION_UP -> {
                     // The user lifted their finger
                     p2ABool = false
+
+                    if(p1.hp < 0){
+                        p1.hp = 0
+                    }
+
+                    player1HP.updateHP(p1.hp)
                 }
             }
             true
@@ -127,12 +157,23 @@ class BattleActivity : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     // The user touched the screen
                     p2BBool = true
+
+                    if(p1.hp < 0){
+                        p1.hp = 0
+                    }
+
                     player1HP.updateHP(p1.hp)
-                    player2HP.updateHP(p2.hp)
+
                 }
                 MotionEvent.ACTION_UP -> {
                     // The user lifted their finger
                     p2BBool = false
+
+                    if(p1.hp < 0){
+                        p1.hp = 0
+                    }
+
+                    player1HP.updateHP(p1.hp)
                 }
             }
             true
@@ -158,7 +199,9 @@ class BattleActivity : AppCompatActivity() {
         gameJob = GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
             while (true) {
                 if (battle.gameOver) {
+                    delay(500)
                     arena.gameOverBitmap()
+                    delay(500)
                     break
                 }else if(isPaused){
                     arena.pauseBitmap()

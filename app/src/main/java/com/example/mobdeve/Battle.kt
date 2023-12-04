@@ -6,7 +6,7 @@ import java.lang.Math.sin
 
 class Battle(var p1: Player, var p2: Player) {
     var gameOver: Boolean = false
-    val ARENA_SIZE: Int = 800
+    val ARENA_SIZE: Int = 720
     init {
         this.p2.posX = (ARENA_SIZE / 2).toInt()
         this.p2.posY = ((ARENA_SIZE / 4) - 32).toInt()
@@ -24,8 +24,6 @@ class Battle(var p1: Player, var p2: Player) {
     fun update(p1Joystick: Float, p2Joystick: Float, p1normal: Boolean, p1special: Boolean, p2normal: Boolean, p2special: Boolean) {
         p1.angle = p1Joystick
         p2.angle = p2Joystick
-
-        Log.w("Angle", "p1: ${p1.angle}, p1js: ${p1Joystick}")
 
         // handle death
         if (p1.hp <= 0) {
@@ -73,14 +71,14 @@ class Battle(var p1: Player, var p2: Player) {
                 p1.currentAction = 3
                 p1.actionFrame = 0
             }
-            // idle
-            else if (p1.currentAction == 0){
-                if (p1.actionFrame < 12) p1.actionFrame += 1
+            else if (p1Joystick != 0F) {
+                p1.currentAction = 1
+                if (p1.actionFrame < 10) p1.actionFrame += 1
                 else p1.actionFrame = 0
             }
-            // moving
-            else if (p1.currentAction == 1){
-                if (p1.actionFrame < 10) p1.actionFrame += 1
+            else if (p1Joystick == 0F) {
+                p1.currentAction = 0
+                if (p1.actionFrame < 12) p1.actionFrame += 1
                 else p1.actionFrame = 0
             }
         }
@@ -121,14 +119,14 @@ class Battle(var p1: Player, var p2: Player) {
                 p2.currentAction = 3
                 p2.actionFrame = 0
             }
-            // idle
-            else if (p2.currentAction == 0){
-                if (p2.actionFrame < 12) p2.actionFrame += 1
+            else if (p2Joystick != 0F) {
+                p2.currentAction = 1
+                if (p2.actionFrame < 10) p2.actionFrame += 1
                 else p2.actionFrame = 0
             }
-            // moving
-            else if (p2.currentAction == 1){
-                if (p2.actionFrame < 10) p2.actionFrame += 1
+            else if (p2Joystick == 0F) {
+                p2.currentAction = 0
+                if (p2.actionFrame < 12) p2.actionFrame += 1
                 else p2.actionFrame = 0
             }
         }

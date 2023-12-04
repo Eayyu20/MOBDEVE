@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class BattleActivity : AppCompatActivity() {
     lateinit var battle: Battle
     lateinit var arena: Arena
-    val ARENA_SIZE: Int = 800
+    val ARENA_SIZE: Int = 720
 
     lateinit var p1: Player
     lateinit var p2: Player

@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +33,8 @@ class BattleActivity : AppCompatActivity() {
     lateinit var player2BButton: ImageView
     lateinit var player1Joystick : Joystick
     lateinit var player2Joystick: Joystick
+    lateinit var player1HP: HP
+    lateinit var player2HP: HP
 
     var p1ABool: Boolean = false
     var p1BBool: Boolean = false
@@ -57,11 +60,19 @@ class BattleActivity : AppCompatActivity() {
         player2AButton = findViewById<ImageView>(R.id.player2AButton)
         player2BButton = findViewById<ImageView>(R.id.player2BButton)
 
+        player2BButton = findViewById<ImageView>(R.id.player2BButton)
+        player2BButton = findViewById<ImageView>(R.id.player2BButton)
+
+        player1HP = findViewById<HP>(R.id.player1HP)
+        player2HP = findViewById<HP>(R.id.player2HP)
+
         player1AButton.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     // The user touched the screen
                     p1ABool = true
+                    player1HP.updateHP(p1.hp)
+                    player2HP.updateHP(p2.hp)
                 }
                 MotionEvent.ACTION_UP -> {
                     // The user lifted their finger
@@ -75,6 +86,8 @@ class BattleActivity : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     // The user touched the screen
                     p1BBool = true
+                    player1HP.updateHP(p1.hp)
+                    player2HP.updateHP(p2.hp)
                 }
                 MotionEvent.ACTION_UP -> {
                     // The user lifted their finger
@@ -88,6 +101,8 @@ class BattleActivity : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     // The user touched the screen
                     p2ABool = true
+                    player1HP.updateHP(p1.hp)
+                    player2HP.updateHP(p2.hp)
                 }
                 MotionEvent.ACTION_UP -> {
                     // The user lifted their finger
@@ -101,6 +116,8 @@ class BattleActivity : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     // The user touched the screen
                     p2BBool = true
+                    player1HP.updateHP(p1.hp)
+                    player2HP.updateHP(p2.hp)
                 }
                 MotionEvent.ACTION_UP -> {
                     // The user lifted their finger

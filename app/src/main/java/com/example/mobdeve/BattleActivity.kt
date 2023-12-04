@@ -138,7 +138,7 @@ class BattleActivity : AppCompatActivity() {
 
     fun runLoopOnThread() {
         GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
-            while (true) { // infinite loop
+            while (!battle.gameOver) { // infinite loop
                 battle.update(player1Joystick.angle, player2Joystick.angle, p1ABool, p1BBool, p2ABool, p2BBool)
                 delay(86) // non-blocking delay for 1 second (default time unit is ms)
                 arena.updateBitmap(update())
@@ -162,7 +162,7 @@ class BattleActivity : AppCompatActivity() {
         canvas.drawBitmap(p2_current, (p2.posX).toFloat(), (p2.posY).toFloat(), null)
 
         // check if gameOver
-        if (p1.hp <= 0 || p2.hp <= 0) {
+        if (battle.gameOver) {
             // draw game over screen
         }
 

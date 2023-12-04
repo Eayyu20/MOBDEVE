@@ -67,7 +67,7 @@ class BattleActivity : AppCompatActivity() {
                     p1ABool = false
                 }
             }
-            false
+            true
         }
         player1BButton.setOnTouchListener { v, event ->
             when (event.action) {
@@ -80,7 +80,7 @@ class BattleActivity : AppCompatActivity() {
                     p1BBool = false
                 }
             }
-            false
+            true
         }
         player2AButton.setOnTouchListener { v, event ->
             when (event.action) {
@@ -93,7 +93,7 @@ class BattleActivity : AppCompatActivity() {
                     p2ABool = false
                 }
             }
-            false
+            true
         }
         player2BButton.setOnTouchListener { v, event ->
             when (event.action) {
@@ -106,7 +106,7 @@ class BattleActivity : AppCompatActivity() {
                     p2BBool = false
                 }
             }
-            false
+            true
         }
 
         player1Joystick = findViewById<Joystick>(R.id.player1joystick)

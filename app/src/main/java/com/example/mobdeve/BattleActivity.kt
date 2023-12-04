@@ -2,6 +2,7 @@ package com.example.mobdeve
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.os.Build
@@ -40,6 +41,8 @@ class BattleActivity : AppCompatActivity() {
     var p1BBool: Boolean = false
     var p2ABool: Boolean = false
     var p2BBool: Boolean = false
+
+    var isPaused: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,6 +133,18 @@ class BattleActivity : AppCompatActivity() {
             true
         }
 
+        arena.onClick = {
+            // The Arena was clicked
+            // Pause the game
+            if(!isPaused){
+                isPaused = true
+                arena.pauseBitmap()
+            }else{
+                isPaused = false
+                runLoopOnThread()
+            }
+        }
+
         player1Joystick = findViewById<Joystick>(R.id.player1joystick)
         player2Joystick = findViewById<Joystick>(R.id.player2joystick)
 
@@ -138,7 +153,7 @@ class BattleActivity : AppCompatActivity() {
 
     fun runLoopOnThread() {
         GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
-            while (!battle.gameOver) { // infinite loop
+            while (!battle.gameOver && !isPaused) { // infinite loop
                 battle.update(player1Joystick.angle, player2Joystick.angle, p1ABool, p1BBool, p2ABool, p2BBool)
                 delay(86) // non-blocking delay for 1 second (default time unit is ms)
                 arena.updateBitmap(update())
@@ -163,7 +178,7 @@ class BattleActivity : AppCompatActivity() {
 
         // check if gameOver
         if (battle.gameOver) {
-            // draw game over screen
+           bitmap = BitmapFactory.decodeResource(resources, R.drawable.game_over)
         }
 
         return bitmap

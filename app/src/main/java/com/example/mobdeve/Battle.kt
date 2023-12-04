@@ -7,11 +7,11 @@ import java.lang.Math.sin
 class Battle(var p1: Player, var p2: Player) {
     var gameOver: Boolean = false
     init {
-        this.p1.posX = (1300 / 4).toInt()
-        this.p1.posY = (1148 / 2).toInt()
+        this.p1.posX = (1000 / 2).toInt()
+        this.p1.posY = ((1000 / 4) - 32).toInt()
 
-        this.p2.posX = (1300 * 3 / 4).toInt()
-        this.p2.posY = (1148 / 2).toInt()
+        this.p2.posX = (1000 / 2).toInt()
+        this.p2.posY = ((1000 * 3 / 4) + 32).toInt()
 
         this.p1.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
         this.p2.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
@@ -24,13 +24,15 @@ class Battle(var p1: Player, var p2: Player) {
         p1.angle = p1Joystick
         p2.angle = p2Joystick
 
+        Log.w("Angle", "p1: ${p1.angle}, p1js: ${p1Joystick}")
+
         // handle death
         if (p1.hp <= 0) {
             if (p1.currentAction != 4) {
                 p1.currentAction = 4
                 p1.actionFrame = 0
             }
-            if (p1.actionFrame < 4) p1.actionFrame += 1
+            if (p1.actionFrame < 16) p1.actionFrame += 1
             else gameOver = true
             return
         }
@@ -39,21 +41,21 @@ class Battle(var p1: Player, var p2: Player) {
                 p2.currentAction = 4
                 p2.actionFrame = 0
             }
-            if (p2.actionFrame < 4) p2.actionFrame += 1
+            if (p2.actionFrame < 16) p2.actionFrame += 1
             else gameOver = true
             return
         }
 
         // movement = speed * direction
-        p1.move((p1.speed * cos(p1Joystick.toDouble())).toInt(),(p1.speed * sin(p1Joystick.toDouble())).toInt())
-        p2.move((p2.speed * cos(p2Joystick.toDouble())).toInt(), (p2.speed * sin(p2Joystick.toDouble())).toInt())
+        if (p1.angle != 0F) p1.move((p1.speed * cos(p1Joystick.toDouble())).toInt(), (p1.speed * sin(p1Joystick.toDouble())).toInt())
+        if (p2.angle != 0F) p2.move((p2.speed * cos(p2Joystick.toDouble())).toInt(), (p2.speed * sin(p2Joystick.toDouble())).toInt())
 
         // take damage
         if (p1.currentAction == 5) {
-            if (p1.actionFrame < 2) p1.actionFrame += 1
+            if (p1.actionFrame < 8) p1.actionFrame += 1
             else p1.currentAction = 0
         }
-        if (p2.currentAction == 5) {
+        if (p2.currentAction == 8) {
             if (p2.actionFrame < 2) p2.actionFrame += 1
             else p2.currentAction = 0
         }
@@ -72,31 +74,38 @@ class Battle(var p1: Player, var p2: Player) {
             }
             // idle
             else if (p1.currentAction == 0){
-                if (p1.actionFrame < 3) p1.actionFrame += 1
+                if (p1.actionFrame < 12) p1.actionFrame += 1
                 else p1.actionFrame = 0
             }
             // moving
             else if (p1.currentAction == 1){
-                if (p1.actionFrame < 5) p1.actionFrame += 1
+                if (p1.actionFrame < 10) p1.actionFrame += 1
                 else p1.actionFrame = 0
             }
         }
         else {
-            // moving
-            if (p1Joystick > 0 && !p1normal && !p1special) {
-                if (p1.currentAction != 1) p1.currentAction = 1
+            // moving but not attacking
+            if (p1Joystick != 0F && !p1normal && !p1special) {
+                if (p1.currentAction != 1) {
+                    p1.currentAction = 1
+                    p1.actionFrame = 0
+                }
                 else {
-                    if (p1.actionFrame < 5) p1.actionFrame += 1
+                    if (p1.actionFrame < 10) p1.actionFrame += 1
                     else p1.actionFrame = 0
                 }
             }
             // normal and special attack
-            else if (p1.currentAction == 2 || p1.currentAction == 3) {
+            else if (p1.currentAction == 2 && p1.actionFrame < (p1.normal_attack.windupFC + p1.normal_attack.hitFC + p1.normal_attack.followthroughFC) * 1) {
+                p1.actionFrame += 1
+            }
+            else if (p1.currentAction == 3 && p1.actionFrame < (p1.special_attack.windupFC + p1.special_attack.hitFC + p1.special_attack.followthroughFC) * 1) {
                 p1.actionFrame += 1
             }
             // idle
             else {
-                if (p1.actionFrame < 3) p1.actionFrame += 1
+                p1.currentAction = 0
+                if (p1.actionFrame < 12) p1.actionFrame += 1
                 else p1.actionFrame = 0
             }
         }
@@ -113,31 +122,38 @@ class Battle(var p1: Player, var p2: Player) {
             }
             // idle
             else if (p2.currentAction == 0){
-                if (p2.actionFrame < 3) p2.actionFrame += 1
+                if (p2.actionFrame < 12) p2.actionFrame += 1
                 else p2.actionFrame = 0
             }
             // moving
             else if (p2.currentAction == 1){
-                if (p2.actionFrame < 5) p2.actionFrame += 1
+                if (p2.actionFrame < 10) p2.actionFrame += 1
                 else p2.actionFrame = 0
             }
         }
         else {
             // moving
-            if (p2Joystick > 0 && !p2normal && !p2special) {
-                if (p2.currentAction != 1) p2.currentAction = 1
+            if (p2Joystick != 0F && !p2normal && !p2special) {
+                if (p2.currentAction != 1) {
+                    p2.currentAction = 1
+                    p2.actionFrame = 0
+                }
                 else {
-                    if (p2.actionFrame < 5) p2.actionFrame += 1
+                    if (p2.actionFrame < 10) p2.actionFrame += 1
                     else p2.actionFrame = 0
                 }
             }
             // normal and special attack
-            else if (p2.currentAction == 2 || p2.currentAction == 3) {
+            else if (p2.currentAction == 2 && p2.actionFrame < (p2.normal_attack.windupFC + p2.normal_attack.hitFC + p2.normal_attack.followthroughFC) * 1) {
+                p2.actionFrame += 1
+            }
+            else if (p2.currentAction == 3 && p2.actionFrame < (p2.special_attack.windupFC + p2.special_attack.hitFC + p2.special_attack.followthroughFC) * 1) {
                 p2.actionFrame += 1
             }
             // idle
             else {
-                if (p2.actionFrame < 3) p2.actionFrame += 1
+                p2.currentAction = 0
+                if (p2.actionFrame < 12) p2.actionFrame += 1
                 else p2.actionFrame = 0
             }
         }

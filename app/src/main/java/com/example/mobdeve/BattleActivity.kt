@@ -120,8 +120,8 @@ class BattleActivity : AppCompatActivity() {
     fun runLoopOnThread() {
         GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
             while (true) { // infinite loop
-                battle.update(p1JsAngle, p2JsAngle, p1ABool, p1BBool, p2ABool, p2BBool)
-                delay(1000) // non-blocking delay for 1 second (default time unit is ms)
+                battle.update(player1Joystick.angle, player2Joystick.angle, p1ABool, p1BBool, p2ABool, p2BBool)
+                delay(166) // non-blocking delay for 1 second (default time unit is ms)
                 arena.updateBitmap(update())
             }
         }
@@ -131,15 +131,15 @@ class BattleActivity : AppCompatActivity() {
         var bitmap: Bitmap = Bitmap.createBitmap(1300,1148, Bitmap.Config.ARGB_8888)
         var canvas: Canvas = Canvas(bitmap)
 
-        var p1_current: Bitmap = p1.spriteSheet.getSprite(p1.currentAction,p1.actionFrame)
+        var p1_current: Bitmap = getTile(p1)
         p1_current = flipY(p1_current)
         p1_current = rotate(p1_current, 90F)
         if (p1.angle <= 0) p1_current = flipBitmap(p1_current)
         canvas.drawBitmap(p1_current, (p1.posX).toFloat(), (p1.posY).toFloat(), null)
 
-        var p2_current: Bitmap = p2.spriteSheet.getSprite(p2.currentAction,p2.actionFrame)
+        var p2_current: Bitmap = getTile(p2)
         p2_current = rotate(p2_current, 270F)
-        if (p2.angle < 0) p2_current = flipBitmap(p2_current)
+        if (p2.angle <= 0) p2_current = flipBitmap(p2_current)
         canvas.drawBitmap(p2_current, (p2.posX).toFloat(), (p2.posY).toFloat(), null)
 
         // check if gameOver
@@ -150,9 +150,131 @@ class BattleActivity : AppCompatActivity() {
         return bitmap
     }
 
+    fun getTile(player: Player): Bitmap  {
+        val currentAction = player.currentAction
+        val actionFrame = player.actionFrame
+        var spriteRow = currentAction
+        var spriteCol = 0
+
+        // prevent exceeding sprite dimensions
+        if (currentAction > 4) spriteRow = 4
+
+        // if moving or idle, as is works
+        if (player.currentAction == 0) {
+            spriteCol = actionFrame / 4
+        }
+        else if (player.currentAction == 1) {
+            spriteCol = actionFrame / 2
+        }
+        // if take damage
+        else if (player.currentAction == 5) {
+            spriteRow = 4
+            spriteCol = 0
+        }
+        // if death
+        else if (player.currentAction == 4) {
+            spriteCol = actionFrame / 4
+        }
+        // if normal attack
+        else if (player.currentAction == 2) {
+            if (player.charId == 1) {
+                // wind up
+                if (player.actionFrame / 4 < player.normal_attack.windupFC) {
+                    spriteCol = 0
+                }
+                else if (player.actionFrame / 2 < player.normal_attack.windupFC) {
+                    spriteCol = 1
+                }
+                // hit
+                else if (player.actionFrame / 2 < player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = 2
+                }
+                // follow through
+                else if (player.actionFrame / 2 > player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = (player.actionFrame / 2) % (player.normal_attack.windupFC + player.normal_attack.hitFC)
+                }
+            }
+            else if (player.charId == 2) {
+                // wind up
+                if (player.actionFrame / 2 < player.normal_attack.windupFC) {
+                    spriteCol = 0
+                }
+                // hit
+                else if (player.actionFrame / 2 < player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = 1
+                }
+                // follow through
+                else if (player.actionFrame / 2 > player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = 2
+                }
+            }
+            else if (player.charId == 3) {
+                // wind up
+                if (player.actionFrame / 2 < player.normal_attack.windupFC) {
+                    spriteCol = 0
+                }
+                // hit
+                else if (player.actionFrame / 2 < player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = 1
+                }
+                // follow through
+                else if (player.actionFrame / 2 > player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = 2
+                }
+            }
+        }
+        // if special attack
+        else if (player.currentAction == 3) {
+            if (player.charId == 1) {
+                // wind up
+                if (player.actionFrame / 4 < player.normal_attack.windupFC) {
+                    spriteCol = 0
+                }
+                else if (player.actionFrame / 2 < player.normal_attack.windupFC) {
+                    spriteCol = 1
+                }
+                // hit
+                else if (player.actionFrame / 2 < player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = 2
+                }
+                // follow through
+                else if (player.actionFrame / 2 > player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = (player.actionFrame / 2) % (player.normal_attack.windupFC + player.normal_attack.hitFC)
+                }
+            }
+            else if (player.charId == 2) {
+                // wind up
+                if (player.actionFrame / 2 < player.normal_attack.windupFC) {
+                    spriteCol = 1
+                }
+                // hit
+                else if (player.actionFrame / 2 < player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = 3
+                }
+                // follow through
+                else if (player.actionFrame / 2 > player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                    spriteCol = 4
+                }
+            }
+            else if (player.charId == 3) {
+                // hit
+                if (player.actionFrame / 2 < player.normal_attack.hitFC) {
+                    spriteCol = 0
+                }
+                // follow through
+                else if (player.actionFrame / 2 > player.normal_attack.hitFC) {
+                    spriteCol = 1
+                }
+            }
+        }
+
+
+        return player.spriteSheet.getSprite(spriteRow, spriteCol)
+    }
+
     fun flipBitmap(source: Bitmap): Bitmap {
         val matrix = Matrix()
-        matrix.postScale(-1F, 1F, source.getWidth() / 2f, source.getHeight() / 2f)
+        matrix.postScale(1F, -1F, source.getWidth() / 2f, source.getHeight() / 2f)
         return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
     }
 
@@ -164,7 +286,7 @@ class BattleActivity : AppCompatActivity() {
 
     fun flipY(source: Bitmap): Bitmap {
         val matrix = Matrix()
-        matrix.postScale(1F, -1F, source.getWidth() / 2f, source.getHeight() / 2f)
+        matrix.postScale(-1F, 1F, source.getWidth() / 2f, source.getHeight() / 2f)
         return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
     }
 

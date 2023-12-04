@@ -43,13 +43,10 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
                     else if (innerCircleY < -350) {
                         innerCircleY = -350F
                     }
-
-                    Log.w("ANGLE", angle.toString())
-
                     invalidate()
                     return true
                 }
-                else if (event.action == MotionEvent.ACTION_UP){
+                else {
                     resetJoystick()
                 }
                 view.performClick()

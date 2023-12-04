@@ -81,6 +81,29 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
         }
     }
 
+    fun gameOverBitmap(){
+        val canvas = holder.lockCanvas()
+        if (canvas != null) {
+            var image = BitmapFactory.decodeResource(resources, R.drawable.game_over)
+
+            val scaledWidth = image.width / 4
+            val scaledHeight = image.height / 4
+            val scaledImage = Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, true)
+
+            val x = (canvas.width - scaledImage.width) / 2
+            val y = (canvas.height - scaledImage.height) / 2
+
+            val paint = Paint()
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            canvas.drawPaint(paint)
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
+
+            canvas.drawBitmap(scaledImage, x.toFloat(), y.toFloat(), null)
+            holder.unlockCanvasAndPost(canvas)
+        }
+    }
+
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {

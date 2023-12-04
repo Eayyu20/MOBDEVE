@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Collections.rotate
@@ -45,6 +47,7 @@ class BattleActivity : AppCompatActivity() {
     var p2BBool: Boolean = false
 
     var isPaused: Boolean = false
+    var gameJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,7 +155,13 @@ class BattleActivity : AppCompatActivity() {
     }
 
     fun runLoopOnThread() {
-        GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
+        gameJob = GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
+
+            if(battle.gameOver){
+                arena.gameOverBitmap()
+                gameJob?.cancel()
+            }
+
             while (!battle.gameOver) { // infinite loop
                 if (isPaused) {
                     arena.pauseBitmap()
@@ -181,11 +190,6 @@ class BattleActivity : AppCompatActivity() {
         p2_current = rotate(p2_current, 270F)
         if (p2.angle < 0) p2_current = flipBitmap(p2_current)
         canvas.drawBitmap(p2_current, (p2.posX).toFloat(), (p2.posY).toFloat(), null)
-
-        // check if gameOver
-        if (battle.gameOver) {
-           bitmap = BitmapFactory.decodeResource(resources, R.drawable.game_over)
-        }
 
         return bitmap
     }

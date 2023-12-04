@@ -6,7 +6,7 @@ import android.util.Log
 
 class Player(context: Context, charId: Int) {
     // 1 - sword, 2 - spear, 3 - shield
-    val ARENA_SIZE: Int = 800
+    val ARENA_SIZE: Int = 720
     var charId: Int = 0
     var hp: Int = 100
     var posX: Int = 0

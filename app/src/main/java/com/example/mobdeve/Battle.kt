@@ -29,7 +29,7 @@ class Battle(var p1: Player, var p2: Player) {
         p1.angle = p1Joystick
         p2.angle = p2Joystick
 
-        if (p1.angle > 0) {
+        if (p1.angle >= 0) {
             p1.updateHitboxes(true)
         }
         else {
@@ -189,7 +189,6 @@ class Battle(var p1: Player, var p2: Player) {
                 p2.actionFrame = 0
             }
             p2.hp -= p1.att_dmg
-            Log.w("HP", "p2 HP: " + p2.hp.toString())
             // set p1 current frame to end of hitFC
             p1.actionFrame = p1.normal_attack.hitFC + 1
         }
@@ -206,7 +205,6 @@ class Battle(var p1: Player, var p2: Player) {
             }
 
             p2.hp -= p1.spa_dmg
-            Log.w("HP", "p2 HP: " + p2.hp.toString())
             // set p1 current frame to end of hitFC
             p1.actionFrame = p1.special_attack.hitFC + 1
         }
@@ -222,7 +220,6 @@ class Battle(var p1: Player, var p2: Player) {
                 p1.actionFrame = 0
             }
             p1.hp -= p2.att_dmg
-            Log.w("HP", "p1 HP: " + p1.hp.toString())
             // set p2 current frame to end of hitFC
             p2.actionFrame = p2.normal_attack.hitFC + 1
         }
@@ -238,7 +235,6 @@ class Battle(var p1: Player, var p2: Player) {
                 p1.actionFrame = 0
             }
             p1.hp -= p2.spa_dmg
-            Log.w("HP", "p1 HP: " + p1.hp.toString())
             // set p2 current frame to end of hitFC
             p2.actionFrame = p2.special_attack.hitFC + 1
         }
@@ -250,13 +246,9 @@ class Battle(var p1: Player, var p2: Player) {
             val proj1 = project(def, normal)
             val proj2 = project(att, normal)
             if (!overlaps(proj1, proj2)) {
-                Log.w("ifCollide", "ifCollide: False")
                 return false
             }
-            Log.w("att", "att: " + att.contentDeepToString())
-            Log.w("def", "def: " + def.contentDeepToString())
         }
-        Log.w("ifCollide", "ifCollide: True")
         return true
     }
 

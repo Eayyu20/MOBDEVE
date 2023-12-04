@@ -84,10 +84,11 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
     fun gameOverBitmap(){
         val canvas = holder.lockCanvas()
         if (canvas != null) {
+
             var image = BitmapFactory.decodeResource(resources, R.drawable.game_over)
 
-            val scaledWidth = image.width / 4
-            val scaledHeight = image.height / 4
+            val scaledWidth = image.width / 3
+            val scaledHeight = image.height / 3
             val scaledImage = Bitmap.createScaledBitmap(image, scaledWidth, scaledHeight, true)
 
             val x = (canvas.width - scaledImage.width) / 2

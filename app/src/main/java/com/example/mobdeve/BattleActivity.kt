@@ -156,14 +156,11 @@ class BattleActivity : AppCompatActivity() {
 
     fun runLoopOnThread() {
         gameJob = GlobalScope.launch(Dispatchers.Default) { // launch a new coroutine in background
-
-            if(battle.gameOver){
-                arena.gameOverBitmap()
-                gameJob?.cancel()
-            }
-
-            while (!battle.gameOver) { // infinite loop
-                if (isPaused) {
+            while (true) {
+                if (battle.gameOver) {
+                    arena.gameOverBitmap()
+                    break
+                }else if(isPaused){
                     arena.pauseBitmap()
                     delay(100)
                 }
@@ -173,6 +170,8 @@ class BattleActivity : AppCompatActivity() {
                     arena.updateBitmap(update())
                 }
             }
+            gameJob?.cancel()
+            end()
         }
     }
 
@@ -334,7 +333,7 @@ class BattleActivity : AppCompatActivity() {
         return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
     }
 
-    fun end(v: View) {
+    fun end() {
         val intent = Intent(this, TitleActivity::class.java)
         startActivity(intent)
         finish()

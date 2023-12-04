@@ -45,8 +45,8 @@ class Player(context: Context, charId: Int) {
             this.special_attack = Attack(3, 5, 4)
             this.speed = 25
             this.const_def_hitbox = arrayOf(intArrayOf(35,21), intArrayOf(35,32), intArrayOf(8,21), intArrayOf(8,32))
-            this.const_att_hitbox = arrayOf(intArrayOf(36,16), intArrayOf(32,60), intArrayOf(15,32), intArrayOf(9,55))
-            this.const_spa_hitbox = arrayOf(intArrayOf(27,39), intArrayOf(27,54), intArrayOf(5,39), intArrayOf(5, 54))
+            this.const_att_hitbox = arrayOf(intArrayOf(36,16), intArrayOf(32,90), intArrayOf(15,32), intArrayOf(9,85))
+            this.const_spa_hitbox = arrayOf(intArrayOf(27,39), intArrayOf(27,84), intArrayOf(5,39), intArrayOf(5, 84))
         }
         // spear character
         else if (charId == 2) {
@@ -57,8 +57,8 @@ class Player(context: Context, charId: Int) {
             this.special_attack = Attack(1, 1, 3)
             this.speed = 30
             this.const_def_hitbox = arrayOf(intArrayOf(31,25), intArrayOf(31,33), intArrayOf(4,26), intArrayOf(4,33))
-            this.const_att_hitbox = arrayOf(intArrayOf(19,28), intArrayOf(19,57), intArrayOf(17,28), intArrayOf(17,57))
-            this.const_spa_hitbox = arrayOf(intArrayOf(60,18), intArrayOf(53,47), intArrayOf(14,29), intArrayOf(23,56))
+            this.const_att_hitbox = arrayOf(intArrayOf(19,28), intArrayOf(19,107), intArrayOf(17,28), intArrayOf(17,107))
+            this.const_spa_hitbox = arrayOf(intArrayOf(60,18), intArrayOf(53,97), intArrayOf(14,29), intArrayOf(23,106))
         }
         // shield character
         else if (charId == 3) {
@@ -69,8 +69,8 @@ class Player(context: Context, charId: Int) {
             this.special_attack = Attack(0, 6, 2)
             this.speed = 20
             this.const_def_hitbox = arrayOf(intArrayOf(48,23), intArrayOf(48,42), intArrayOf(6,23), intArrayOf(6,42))
-            this.const_att_hitbox = arrayOf(intArrayOf(35,49), intArrayOf(35,59), intArrayOf(9,49), intArrayOf(9,59))
-            this.const_spa_hitbox = arrayOf(intArrayOf(36,33), intArrayOf(36,43), intArrayOf(10,33), intArrayOf(10,43))
+            this.const_att_hitbox = arrayOf(intArrayOf(35,49), intArrayOf(35,79), intArrayOf(9,49), intArrayOf(9,79))
+            this.const_spa_hitbox = arrayOf(intArrayOf(36,33), intArrayOf(36,63), intArrayOf(10,33), intArrayOf(10,63))
         }
         else {
             print("ERR: Character not found.")

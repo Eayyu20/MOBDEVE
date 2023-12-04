@@ -57,7 +57,7 @@ class Player(context: Context, charId: Int) {
             this.special_attack = Attack(1, 1, 3)
             this.speed = 30
             this.const_def_hitbox = arrayOf(intArrayOf(31,25), intArrayOf(31,33), intArrayOf(4,26), intArrayOf(4,33))
-            this.const_att_hitbox = arrayOf(intArrayOf(19,28), intArrayOf(19,57))
+            this.const_att_hitbox = arrayOf(intArrayOf(19,28), intArrayOf(19,57), intArrayOf(17,28), intArrayOf(17,57))
             this.const_spa_hitbox = arrayOf(intArrayOf(60,18), intArrayOf(53,47), intArrayOf(14,29), intArrayOf(23,56))
         }
         // shield character

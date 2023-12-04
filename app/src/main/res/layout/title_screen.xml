@@ -47,7 +47,7 @@
             android:fontFamily="monospace"
             android:shadowColor="#F60000"
             android:text="F.Y.T"
-            android:textColor="#FFFFFF"
+            android:textColor="#FF9594"
             android:textSize="80sp"
             android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
             android:orientation="horizontal"
             android:text="Click anywhere to start!"
             android:textAlignment="center"
-            android:textColor="#FFFFFF"
+            android:textColor="#FF9594"
             android:textSize="18sp" />
     </LinearLayout>
 

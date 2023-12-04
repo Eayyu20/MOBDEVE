@@ -259,10 +259,13 @@ class Battle(var p1: Player, var p2: Player) {
                 currentLine = intArrayOf(coord[0] - prevCoord[0], prevCoord[1] - coord[1], coord[0] - prevCoord[0] + prevCoord[1] - coord[1])
                 for (line in rect_lines) {
                     det = (currentLine[0] * line[1] - currentLine[1] * line[0]).toDouble()
+                    Log.w("det", "det: " + det.toString())
                     if (det != 0.0) {
                         t = (line[2] * currentLine[1] - currentLine[2] * line[1]) / det
                         u = (line[2] * currentLine[0] - currentLine[2] * line[0]) / det
-                        if (0 <= t && t <= 1 && 0 <= u && u <= 1) {
+                        Log.w("det", "t: " + t.toString())
+                        Log.w("det", "u: " + u.toString())
+                        if ((0 <= t && t <= 1) && (0 <= u && u <= 1)) {
                             intersect_flag = true
                             break
                         }
@@ -278,84 +281,5 @@ class Battle(var p1: Player, var p2: Player) {
         Log.w("def", "def: " + def.contentDeepToString())
         Log.w("ifCollide", "Collide: " + intersect_flag.toString())
         return intersect_flag
-    }
-
-
-    fun rotate90(matrix: Array<IntArray>): Array<IntArray> {
-        val rows = matrix.size
-        val cols = matrix[0].size
-        val result = Array(cols) { IntArray(rows) }
-
-        // Transpose the matrix
-        for (i in 0 until rows) {
-            for (j in 0 until cols) {
-                result[j][i] = matrix[i][j]
-            }
-        }
-
-        // Reverse each row
-        for (i in 0 until cols) {
-            for (j in 0 until rows / 2) {
-                val temp = result[i][j]
-                result[i][j] = result[i][rows - j - 1]
-                result[i][rows - j - 1] = temp
-            }
-        }
-
-        return result
-    }
-
-    fun rotate270(matrix: Array<IntArray>): Array<IntArray> {
-        val rows = matrix.size
-        val cols = matrix[0].size
-        val result = Array(cols) { IntArray(rows) }
-
-        // Transpose the matrix
-        for (i in 0 until rows) {
-            for (j in 0 until cols) {
-                result[j][i] = matrix[i][j]
-            }
-        }
-
-        // Reverse each column
-        for (i in 0 until cols) {
-            for (j in 0 until rows / 2) {
-                val temp = result[i][j]
-                result[i][j] = result[i][rows - j - 1]
-                result[i][rows - j - 1] = temp
-            }
-        }
-
-        return result
-    }
-
-    fun flipHorizontal(matrix: Array<IntArray>): Array<IntArray> {
-        val rows = matrix.size
-        val cols = matrix[0].size
-        val result = Array(rows) { IntArray(cols) }
-
-        // Flip each row horizontally
-        for (i in 0 until rows) {
-            for (j in 0 until cols) {
-                result[i][j] = matrix[i][cols - 1 - j]
-            }
-        }
-
-        return result
-    }
-
-    fun flipVertical(matrix: Array<IntArray>): Array<IntArray> {
-        val rows = matrix.size
-        val cols = matrix[0].size
-        val result = Array(rows) { IntArray(cols) }
-
-        // Flip each column vertically
-        for (i in 0 until rows) {
-            for (j in 0 until cols) {
-                result[i][j] = matrix[rows - 1 - i][j]
-            }
-        }
-
-        return result
     }
 }

@@ -7,7 +7,9 @@
     android:onClick="toCharacterSelect"
     android:orientation="horizontal"
     android:screenOrientation="landscape"
-    tools:context=".TitleActivity">
+    tools:context=".TitleActivity"
+    android:background="@drawable/bgtitle"
+    >
 
     <ImageView
         android:id="@+id/ivBackgroundArt"
@@ -48,7 +50,7 @@
             android:fontFamily="monospace"
             android:shadowColor="#F60000"
             android:text="F.Y.T"
-            android:textColor="#FFFFFF"
+            android:textColor="#FF9594"
             android:textSize="80sp"
             android:textStyle="bold" />
 
@@ -61,7 +63,7 @@
             android:orientation="horizontal"
             android:text="Click anywhere to start!"
             android:textAlignment="center"
-            android:textColor="#FFFFFF"
+            android:textColor="#FF9594"
             android:textSize="18sp" />
     </LinearLayout>
 

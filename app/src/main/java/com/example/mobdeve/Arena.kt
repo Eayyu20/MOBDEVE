@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PixelFormat
 import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.util.Log
@@ -18,7 +19,10 @@ class Arena(context: Context, attrs: AttributeSet): SurfaceView(context, attrs),
     private var bitmap: Bitmap? = null
 
     init{
+        setWillNotDraw(false)
         holder.addCallback(this)
+        setZOrderOnTop(true)
+        holder.setFormat(PixelFormat.TRANSPARENT)
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {

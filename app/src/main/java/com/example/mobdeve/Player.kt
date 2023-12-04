@@ -6,6 +6,7 @@ import android.util.Log
 
 class Player(context: Context, charId: Int) {
     // 1 - sword, 2 - spear, 3 - shield
+    val ARENA_SIZE: Int = 800
     var charId: Int = 0
     var hp: Int = 100
     var posX: Int = 0
@@ -71,11 +72,13 @@ class Player(context: Context, charId: Int) {
     }
 
     fun move(x_displacement: Int, y_displacement: Int) {
+        Log.w("pos", "posX: ${posX} x_dis: ${x_displacement}")
+        Log.w("pos", "posY: ${posY} y_dis: ${y_displacement}")
         if (posX + x_displacement < 0) posX = 0
-        else if (posX + x_displacement > 1100) posX = 1100
+        else if (posX + x_displacement > ARENA_SIZE - 64) posX = ARENA_SIZE - 64
         else posX += x_displacement
         if (posY + y_displacement < 0) posY = 0
-        else if (posY + y_displacement > 1100) posY = 1100
+        else if (posY + y_displacement > ARENA_SIZE - 96) posY = ARENA_SIZE - 96
         else posY += y_displacement
     }
 }

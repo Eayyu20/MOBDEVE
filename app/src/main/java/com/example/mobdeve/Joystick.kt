@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PixelFormat
+import android.graphics.PorterDuff
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -23,7 +25,10 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
     var angle: Float = 0F
 
     init {
+        setWillNotDraw(false)
         holder.addCallback(this)
+        setZOrderOnTop(true)
+        holder.setFormat(PixelFormat.TRANSPARENT)
 
         setOnTouchListener(object: View.OnTouchListener {
             override fun onTouch(view: View, event: MotionEvent): Boolean {
@@ -85,6 +90,8 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
 
     private fun drawOnCanvas(holder: SurfaceHolder) {
         canvas = holder.lockCanvas()
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+
         val outerCirclePaint = Paint().apply {
             color = Color.GRAY
             style = Paint.Style.FILL
@@ -94,9 +101,6 @@ class Joystick(context: Context, attrs: AttributeSet) : SurfaceView(context, att
             color = Color.RED
             style = Paint.Style.FILL
         }
-
-        Log.w("drawnOnCanvas", " centerX: ${centerX}, centerY: ${centerY}, innerCircleRadius: ${innerCircleRadius}")
-        Log.w("drawnOnCanvas", " width: ${width}, height: ${height}")
 
         canvas.drawCircle(centerX, centerY, (innerCircleRadius * 2), outerCirclePaint)
         canvas.drawCircle(innerCircleX, innerCircleY, innerCircleRadius, innerCirclePaint)

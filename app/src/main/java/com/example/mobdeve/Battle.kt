@@ -6,12 +6,13 @@ import java.lang.Math.sin
 
 class Battle(var p1: Player, var p2: Player) {
     var gameOver: Boolean = false
+    val ARENA_SIZE: Int = 800
     init {
-        this.p2.posX = (1000 / 2).toInt()
-        this.p2.posY = ((1000 / 4) - 32).toInt()
+        this.p2.posX = (ARENA_SIZE / 2).toInt()
+        this.p2.posY = ((ARENA_SIZE / 4) - 32).toInt()
 
-        this.p1.posX = (1000 / 2).toInt()
-        this.p1.posY = ((1000 * 3 / 4) + 32).toInt()
+        this.p1.posX = (ARENA_SIZE / 2).toInt()
+        this.p1.posY = ((ARENA_SIZE * 3 / 4) + 32).toInt()
 
         this.p1.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
         this.p2.currentAction = 0 // 0 - idle, 1 - moving, 2 - normal attack, 3 - special attack, 4 - death
@@ -216,8 +217,6 @@ class Battle(var p1: Player, var p2: Player) {
             // set p2 current frame to end of hitFC
             p2.actionFrame = p2.special_attack.hitFC + 1
         }
-        Log.w("P1", "x: " + p1.posX.toString() +  " y: " + p1.posY.toString() + " action frame: " + p1.actionFrame.toString() + " current action: " + p1.currentAction.toString())
-        Log.w("P2", "x: " + p2.posX.toString() +  " y: " + p2.posY.toString() + " action frame: " + p2.actionFrame.toString() + " current action: " + p2.currentAction.toString())
     }
 
     fun ifCollide(def: Array<IntArray>, att: Array<IntArray>): Boolean {

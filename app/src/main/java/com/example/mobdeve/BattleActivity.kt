@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 class BattleActivity : AppCompatActivity() {
     lateinit var battle: Battle
     lateinit var arena: Arena
+    val ARENA_SIZE: Int = 800
 
     lateinit var p1: Player
     lateinit var p2: Player
@@ -48,7 +49,7 @@ class BattleActivity : AppCompatActivity() {
         p2 = Player(this, Integer.parseInt(p2CharId))
 
         // Initialize map
-        arena = findViewById<Arena>(R.id.arena)
+        arena = findViewById<Arena>(R.id.arena) 
         battle = Battle(p1, p2)
 
         player1AButton = findViewById<ImageView>(R.id.player1AButton)
@@ -126,7 +127,7 @@ class BattleActivity : AppCompatActivity() {
     }
 
     fun update() : Bitmap {
-        var bitmap: Bitmap = Bitmap.createBitmap(1300,1148, Bitmap.Config.ARGB_8888)
+        var bitmap: Bitmap = Bitmap.createBitmap(ARENA_SIZE,ARENA_SIZE, Bitmap.Config.ARGB_8888)
         var canvas: Canvas = Canvas(bitmap)
 
         var p1_current: Bitmap = getTile(p1)

@@ -313,42 +313,42 @@ class BattleActivity : AppCompatActivity() {
         else if (player.currentAction == 3) {
             if (player.charId == 1) {
                 // wind up
-                if (player.actionFrame / 4 < player.normal_attack.windupFC) {
+                if (player.actionFrame / 4 < player.special_attack.windupFC) {
                     spriteCol = 0
                 }
-                else if (player.actionFrame / 2 < player.normal_attack.windupFC) {
+                else if (player.actionFrame / 2 < player.special_attack.windupFC) {
                     spriteCol = 1
                 }
                 // hit
-                else if (player.actionFrame / 2 < player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                else if (player.actionFrame / 2 < player.special_attack.windupFC + player.special_attack.hitFC) {
                     spriteCol = 2
                 }
                 // follow through
-                else if (player.actionFrame / 2 > player.normal_attack.windupFC + player.normal_attack.hitFC) {
-                    spriteCol = (player.actionFrame / 2) % (player.normal_attack.windupFC + player.normal_attack.hitFC)
+                else if (player.actionFrame / 2 > player.special_attack.windupFC + player.special_attack.hitFC) {
+                    spriteCol = (player.actionFrame / 2) % (player.special_attack.windupFC + player.special_attack.hitFC)
                 }
             }
             else if (player.charId == 2) {
                 // wind up
-                if (player.actionFrame / 2 < player.normal_attack.windupFC) {
+                if (player.actionFrame / 2 < player.special_attack.windupFC) {
                     spriteCol = 1
                 }
                 // hit
-                else if (player.actionFrame / 2 < player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                else if (player.actionFrame / 2 < player.special_attack.windupFC + player.special_attack.hitFC) {
                     spriteCol = 3
                 }
                 // follow through
-                else if (player.actionFrame / 2 > player.normal_attack.windupFC + player.normal_attack.hitFC) {
+                else if (player.actionFrame / 2 > player.special_attack.windupFC + player.special_attack.hitFC) {
                     spriteCol = 4
                 }
             }
             else if (player.charId == 3) {
                 // hit
-                if (player.actionFrame / 2 < player.normal_attack.hitFC) {
+                if (player.actionFrame / 2 < player.special_attack.hitFC) {
                     spriteCol = 0
                 }
                 // follow through
-                else if (player.actionFrame / 2 > player.normal_attack.hitFC) {
+                else if (player.actionFrame / 2 > player.special_attack.hitFC) {
                     spriteCol = 1
                 }
             }
